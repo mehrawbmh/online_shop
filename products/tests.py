@@ -1,13 +1,14 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils.datetime_safe import datetime
-from online_shop.settings import TIME_ZONE
+from online_shop import settings
 from .models import *
 
 
 class ProductTest(TestCase):
+
     def setUp(self) -> None:
-        TIME_ZONE = 'uct'
+        settings.TIME_ZONE = 'UTC'  # # # Is it ok?
         self.cat1 = Category.objects.create(name='Base Category')
         self.cat2 = Category.objects.create(parent_id=self.cat1.id, name="Other Category")
 
@@ -55,16 +56,15 @@ class ProductTest(TestCase):
         self.brand2.is_active = False
         self.assertFalse(self.brand2.is_active)
         self.assertTrue(self.brand1.is_active)
-        # self.assertAlmostEqual(self.brand1.create_timestamp.hour, datetime.now().hour)
-        print(self.brand1.create_timestamp)
+        self.assertAlmostEqual(self.brand1.create_timestamp.hour, datetime.utcnow().hour)
         self.assertFalse(self.brand2.is_deleted)
         self.assertIsNone(self.brand1.bio)
-        self.assertAlmostEqual(self.brand1.last_update.day, datetime.now().day)
+        self.assertAlmostEqual(self.brand1.last_update.day, datetime.utcnow().day)
 
     def test_discount_attributes(self):
         self.assertIsNone(self.dis1.max_price)
         self.assertIsNone(self.dis2.expire_date)
-        self.assertEqual(self.dis3.value, 30)
+        self.assertEqual(self.dis3.value, 5)
         self.assertEqual(self.dis5.type, 'amount')
 
     def test_product_fields(self):
@@ -87,10 +87,11 @@ class ProductTest(TestCase):
         self.assertEqual(self.item2.final_price, 20000)
         self.assertEqual(self.item3.final_price, 700)
         self.assertEqual(self.item4.final_price, 4750)
-        self.assertEqual(self.item5.final_price, 15000)  # test maximum price of discount!
+        self.assertEqual(self.item5.discount.profit(self.item5.price), 15000)  # test maximum price of discount!
+        self.assertEqual(self.item5.final_price, 335000)
         for prod in Product.objects.all():
             self.assertIs(type(prod.final_price), int)
-            self.assertAlmostEqual(prod.last_update.minute, datetime.now().minute)
+            self.assertAlmostEqual(prod.last_update.minute, datetime.utcnow().minute)
 
     def test_amount_discount(self):
         self.item1.discount = self.dis4
@@ -100,12 +101,13 @@ class ProductTest(TestCase):
         self.item5.discount = self.dis7
 
         def assign_test(item):
-            item.discount.max_price = 5000
-
-        with self.assertRaises(ValidationError):
+            item.discount._max_price = 5000
+        with self.assertRaises(ValueError):
             assign_test(self.item1)
-        self.assertEqual(Discount.objects.get(id=4).product_set.first(), self.item1)
-        self.assertIsNone(Product.objects.filter(discount__type='percent').all())
+        print(Discount.objects.filter(type='amount', value=10000).first())
+        return
+        # self.assertEqual(Discount.objects.filter(type='amount', value=10000).first().product_set.first(), self.item1)
+        self.assertIsNone(Product.objects.filter(discount__type='percent').first())
         self.assertEqual(self.item1.final_price, 5000)
         self.assertEqual(self.item2.final_price, 15000)
         self.assertEqual(self.item3.final_price, 0)
@@ -113,4 +115,5 @@ class ProductTest(TestCase):
         self.assertIsNotNone(self.dis8.unique_token)
 
     def tearDown(self) -> None:
-        TIME_ZONE = 'Asia/Tehran'
+        settings.TIME_ZONE = 'Asia/Tehran'
+

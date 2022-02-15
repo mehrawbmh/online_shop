@@ -37,6 +37,21 @@ class Discount(BaseModel):
     max_price = models.IntegerField(null=True, blank=True, verbose_name=_("Maximum Price"))  # TODO : add validator
     expire_date = models.DateField(null=True, blank=True, verbose_name=_("Expire time"))
 
+    @property
+    def _max_price(self):
+        return self.max_price
+
+    @_max_price.setter
+    def _max_price(self, value):
+        if self.type != 'percent':
+            raise ValueError("Max price only defines for discounts with type of percent")
+        else:
+            self.max_price = value
+
+
+
+
+
     def profit(self, price):
         if self.type == 'percent':
             return min(self.max_price, int(self.value*price/100)) if self.max_price else self.value * price / 100

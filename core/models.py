@@ -39,6 +39,4 @@ class BaseModel(models.Model):
         return repr(self)
 
     def __repr__(self):
-        return vars(self)
-
-
+        return str(self.__class__.objects.values().filter(id=self.id))
