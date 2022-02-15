@@ -1,4 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.datetime_safe import datetime
+
 from core.models import BaseModel
 from django.utils.translation import gettext_lazy as _
 
@@ -34,6 +37,21 @@ class Discount(BaseModel):
     max_price = models.IntegerField(null=True, blank=True, verbose_name=_("Maximum Price"))  # TODO : add validator
     expire_date = models.DateField(null=True, blank=True, verbose_name=_("Expire time"))
 
+    def profit(self, price):
+        if self.type == 'percent':
+            return min(self.max_price, int(self.value*price/100)) if self.max_price else self.value * price / 100
+        elif self.type == 'amount':
+            return self.value if price - self.value > 0 else price
+        else:
+            raise AttributeError("discount type is not defined!")
+
+    def is_valid(self):
+        if datetime.today().date() > self.expire_date:
+            self.is_active = False
+            raise ValidationError("The discount has expired!")
+        self.is_active = True
+        return True
+
 
 class OffCode(Discount):
     class Meta:
@@ -44,6 +62,15 @@ class OffCode(Discount):
     title = models.CharField(max_length=127, default="Season OFF!", verbose_name=_("Title"))
     min_buy_price = models.IntegerField(default=25000, verbose_name=_("Minimum buy amount"))
 
+    def is_valid(self, code):
+        if self.unique_token == code:
+            if datetime.today().date() > self.expire_date:
+                self.is_active = False
+                raise ValidationError("The token has expired!")
+            self.is_active = True
+            return True
+        return False
+
 
 class Product(BaseModel):
     class Meta:
@@ -52,11 +79,15 @@ class Product(BaseModel):
         ordering = ("name", "-price")
 
     name = models.CharField(max_length=127, verbose_name=_("Product name"), db_index=True)
-    price = models.IntegerField(verbose_name=_("Product price"))
+    price = models.IntegerField(verbose_name=_("Product price"))  # TODO: validator!
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.RESTRICT, verbose_name=_("Category"))
     discount = models.ForeignKey(Discount, null=True, default=None, on_delete=models.SET_NULL,
                                  verbose_name=_("Discount"))
     available_count = models.IntegerField(verbose_name=_("Available number in store"), default=10)
     description = models.TextField(null=True, blank=True, verbose_name=_("Description"))
-    # properties = models.JSONField(verbose_name=_("Product Properties"), null=True, default=None)
+    # properties = models.JSONField(verbose_name=_("Product Properties"), null=True, default=None) (test writing)
+
+    @property
+    def final_price(self):
+        return self.price - self.discount.profit(self.price) if self.discount else self.price
