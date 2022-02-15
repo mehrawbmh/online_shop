@@ -29,6 +29,7 @@ class BaseModel(models.Model):
     def deactivate(self):
         self.is_active = False
         self.save()
+        # TODO: use it when you want to finish a basket(card) of customer after payment
 
     def activate(self):
         self.is_active = True
@@ -36,5 +37,8 @@ class BaseModel(models.Model):
 
     def __str__(self):
         return repr(self)
+
+    def __repr__(self):
+        return vars(self)
 
 
