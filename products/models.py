@@ -16,6 +16,11 @@ class Category(BaseModel):
     parent = models.ForeignKey('self', on_delete=models.RESTRICT, null=True, default=None,
                                verbose_name=_("Category parent"))
 
+    def __repr__(self):
+        if self.parent:
+            return f'Sub Category {self.name}'
+        return f'Base Category {self.name}'
+
 
 class Brand(BaseModel):
     class Meta:
@@ -25,6 +30,9 @@ class Brand(BaseModel):
     name = models.CharField(max_length=50, unique=True, verbose_name=_("Brand name"), db_index=True)
     satisfaction_rate = models.PositiveIntegerField(verbose_name=_("Satisfaction rating"), null=True, blank=True)
     bio = models.TextField(null=True, blank=True, verbose_name=_("Brand description"))
+
+    def __repr__(self):
+        return f'Brand {self.name}'
 
 
 class Discount(BaseModel):
@@ -64,6 +72,8 @@ class Discount(BaseModel):
         self.is_active = True
         return True
 
+    def __repr__(self):
+        return f"{self.type} Discount => {self.value}"
 
 class OffCode(Discount):
     class Meta:
@@ -76,16 +86,19 @@ class OffCode(Discount):
 
     def is_valid(self, code=None):  ### super?
         if self.unique_token == code:
-            if datetime.today().date() > self.expire_date:
-                self.is_active = False
-                raise ValidationError("The token has expired!")
-            self.is_active = True
+            if self.expire_date:
+                if datetime.today().date() > self.expire_date:
+                    self.is_active = False
+                    raise ValidationError("The token has expired!")
+                self.is_active = True
             return True
         return False
 
     def profit(self, price):
         return super().profit(price) if self.min_buy_price < price else 0
 
+    def __repr__(self):
+        return f"{self.type} OffCode => {self.value}"
 
 class Product(BaseModel):
     class Meta:
@@ -107,3 +120,7 @@ class Product(BaseModel):
     @property
     def final_price(self):
         return self.price - self.discount.profit(self.price) if self.discount else self.price
+
+    def __repr__(self):
+        return f"Product {self.name} from brand {self.brand.name}"
+
