@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-15 22:28+0330\n"
+"POT-Creation-Date: 2022-02-16 16:16+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,39 +38,39 @@ msgstr ""
 msgid "Cart item"
 msgstr ""
 
-#: orders/models.py:11 products/models.py:92
+#: orders/models.py:11 products/models.py:107
 msgid "Product"
-msgstr ""
+msgstr "محصول"
 
 #: orders/models.py:12
 msgid "Number of product"
 msgstr ""
 
-#: orders/models.py:13 orders/models.py:18
+#: orders/models.py:13 orders/models.py:22
 msgid "Basket"
 msgstr ""
 
-#: orders/models.py:19
+#: orders/models.py:23
 msgid "Baskets"
 msgstr ""
 
-#: orders/models.py:21
+#: orders/models.py:25
 msgid "OffCode"
 msgstr ""
 
-#: orders/models.py:24
+#: orders/models.py:28
 msgid "Basket Status"
 msgstr ""
 
-#: orders/models.py:26 orders/models.py:32
+#: orders/models.py:31 orders/models.py:37
 msgid "Receipt"
 msgstr ""
 
-#: orders/models.py:34
+#: orders/models.py:39
 msgid "Unique id"
 msgstr ""
 
-#: orders/models.py:36
+#: orders/models.py:41
 msgid "Will delivery at"
 msgstr ""
 
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: products/models.py:12 products/models.py:99
+#: products/models.py:12 products/models.py:115
 msgid "Category"
 msgstr ""
 
@@ -90,66 +90,76 @@ msgstr ""
 msgid "Category parent"
 msgstr ""
 
-#: products/models.py:22
+#: products/models.py:27
 msgid "Brand"
 msgstr ""
 
-#: products/models.py:25
+#: products/models.py:30
 msgid "Brand name"
 msgstr ""
 
-#: products/models.py:26
+#: products/models.py:31
 msgid "Satisfaction rating"
 msgstr ""
 
-#: products/models.py:27
+#: products/models.py:32
 msgid "Brand description"
 msgstr ""
 
-#: products/models.py:32 products/models.py:101
+#: products/models.py:40 products/models.py:117
 msgid "Discount"
 msgstr ""
 
-#: products/models.py:36
+#: products/models.py:44
 msgid "Discount value"
 msgstr ""
 
-#: products/models.py:37
+#: products/models.py:45
 msgid "Maximum Price"
 msgstr ""
 
-#: products/models.py:38
+#: products/models.py:46
 msgid "Expire time"
 msgstr ""
 
-#: products/models.py:73
+#: products/models.py:81
 msgid "Off Code"
 msgstr ""
 
-#: products/models.py:75
+#: products/models.py:83
 msgid "Unique token"
 msgstr ""
 
-#: products/models.py:77
+#: products/models.py:85
 msgid "Title"
 msgstr ""
 
-#: products/models.py:78
+#: products/models.py:86
 msgid "Minimum buy amount"
 msgstr ""
 
-#: products/models.py:96
+#: products/models.py:108
+#, fuzzy
+#| msgid "Product"
+msgid "Products"
+msgstr "محصولات"
+
+#: products/models.py:112
 msgid "Product name"
 msgstr ""
 
-#: products/models.py:97
+#: products/models.py:113
 msgid "Product price"
 msgstr ""
 
-#: products/models.py:102
+#: products/models.py:118
 msgid "Available number in store"
 msgstr ""
 
-#: products/models.py:103
+#: products/models.py:119
 msgid "Description"
+msgstr ""
+
+#: products/models.py:121
+msgid "Product Properties"
 msgstr ""

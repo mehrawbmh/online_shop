@@ -113,7 +113,7 @@ LANGUAGE_CODE = 'en-us'
 LANGUAGES = (('en', 'English'), ('fa', 'Farsi'))
 LOCALE_PATHS = (BASE_DIR / 'locale',)
 
-TIME_ZONE = 'Asia/Tehran'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

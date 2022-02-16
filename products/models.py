@@ -10,16 +10,16 @@ class Category(BaseModel):
     class Meta:
         verbose_name_plural = _("Categories")
         verbose_name = _("Category")
-        ordering = ("parent",)
+        ordering = ('name',)
 
     name = models.CharField(max_length=50, unique=True, verbose_name=_("Category Name"), db_index=True)
-    parent = models.ForeignKey('self', on_delete=models.RESTRICT, null=True, default=None,
+    parent = models.ForeignKey('self', on_delete=models.RESTRICT, null=True, default=None, blank=True,
                                verbose_name=_("Category parent"))
 
     def __repr__(self):
         if self.parent:
-            return f'Sub Category {self.name}'
-        return f'Base Category {self.name}'
+            return f'Sub Category => {self.name}'
+        return f'Base Category => {self.name}'
 
 
 class Brand(BaseModel):
@@ -75,6 +75,7 @@ class Discount(BaseModel):
     def __repr__(self):
         return f"{self.type} Discount => {self.value}"
 
+
 class OffCode(Discount):
     class Meta:
         verbose_name = _("Off Code")
@@ -100,9 +101,11 @@ class OffCode(Discount):
     def __repr__(self):
         return f"{self.type} OffCode => {self.value}"
 
+
 class Product(BaseModel):
     class Meta:
         verbose_name = _("Product")
+        verbose_name_plural = _("Products")
         unique_together = ['name', 'brand']
         ordering = ("name", "-price")
 
@@ -110,12 +113,12 @@ class Product(BaseModel):
     price = models.IntegerField(verbose_name=_("Product price"))  # TODO: validator!
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.RESTRICT, verbose_name=_("Category"))
-    discount = models.ForeignKey(Discount, null=True, default=None, on_delete=models.SET_NULL,
+    discount = models.ForeignKey(Discount, null=True, default=None, blank=True, on_delete=models.SET_NULL,
                                  verbose_name=_("Discount"))
     available_count = models.IntegerField(verbose_name=_("Available number in store"), default=10)
     description = models.TextField(null=True, blank=True, verbose_name=_("Description"))
 
-    # properties = models.JSONField(verbose_name=_("Product Properties"), null=True, default=None) (test writing)
+    properties = models.JSONField(verbose_name=_("Product Properties"), null=True, default=None, blank=True)
 
     @property
     def final_price(self):
@@ -123,4 +126,3 @@ class Product(BaseModel):
 
     def __repr__(self):
         return f"Product {self.name} from brand {self.brand.name}"
-

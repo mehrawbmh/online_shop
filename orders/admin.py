@@ -1,8 +1,9 @@
 from django.contrib import admin
 
-from orders.models import CartItem, Cart
+from orders.models import CartItem, Cart, Receipt
 from products.models import OffCode
 
 admin.site.register(Cart)
 admin.site.register(CartItem)
 admin.site.register(OffCode)
+admin.site.register(Receipt)
