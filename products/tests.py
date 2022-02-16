@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils.datetime_safe import datetime
+
+import products.models
 from online_shop import settings
 from .models import *
 
@@ -109,8 +111,10 @@ class ProductTest(TestCase):
         self.item3.save()
         self.item4.save()
         self.item5.save()
+
         def assign_test(item):
             item.discount._max_price = 5000
+
         with self.assertRaises(ValueError):
             assign_test(self.item1)
         self.assertEqual(Discount.objects.filter(type='amount', value=10000).first().product_set.first(), self.item1)
@@ -142,3 +146,10 @@ class ProductTest(TestCase):
     def tearDown(self) -> None:
         settings.TIME_ZONE = 'Asia/Tehran'
 
+    def test_manager(self):
+        self.assertEqual(len(Product.objects.all()), len(Product.objects.get_active().all()))
+        self.assertEqual(len(Product.objects.all()), len(Product.objects.full_archive().all()))
+        self.assertIsNone(Product.objects.get_deleted().first())
+        self.item2.delete()
+        self.assertNotEqual(len(Product.objects.all()), len(Product.objects.full_archive().all()))
+        self.assertEqual(Product.objects.get_deleted().first(), self.item2)

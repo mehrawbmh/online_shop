@@ -1,6 +1,9 @@
 from datetime import timedelta
 
+from django.core.exceptions import ValidationError
 from django.test import TestCase
+from django.utils.datetime_safe import datetime
+
 from ..models import Cart, CartItem, Product, Receipt
 from products.models import Category, Brand, Discount, OffCode
 
@@ -50,3 +53,17 @@ class CartTest(TestCase):
     def test_receipt_final_price_with_offcode(self):
         self.assertEqual(self.rec1.final_price, 360000)
         self.assertEqual(self.rec2.final_price, 150000)
+
+    def test_product_list_from_receipt(self):
+        self.assertEqual(len(self.rec1.product_list), 2)
+        self.assertEqual(len(self.rec2.product_list), 2)
+
+    def test_offcode_validation(self):
+        self.assertTrue(self.off1.is_valid('asdasd'))
+        self.assertFalse(self.off1.is_valid('asdasssd'))
+        with self.assertRaises(ValidationError):
+            self.off1.expire_date = datetime(2020,3,2).date()
+            self.off1.save()
+            self.off1.is_valid('asdasd')
+
+
