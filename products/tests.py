@@ -83,6 +83,11 @@ class ProductTest(TestCase):
         self.item3.discount = self.dis2
         self.item4.discount = self.dis3
         self.item5.discount = self.dis2
+        self.item1.save()
+        self.item2.save()
+        self.item3.save()
+        self.item4.save()
+        self.item5.save()
         self.assertEqual(self.item1.final_price, 12000)
         self.assertEqual(self.item2.final_price, 20000)
         self.assertEqual(self.item3.final_price, 700)
@@ -99,20 +104,40 @@ class ProductTest(TestCase):
         self.item3.discount = self.dis6
         self.item4.discount = self.dis7
         self.item5.discount = self.dis7
-
+        self.item1.save()
+        self.item2.save()
+        self.item3.save()
+        self.item4.save()
+        self.item5.save()
         def assign_test(item):
             item.discount._max_price = 5000
         with self.assertRaises(ValueError):
             assign_test(self.item1)
-        print(Discount.objects.filter(type='amount', value=10000).first())
-        return
-        # self.assertEqual(Discount.objects.filter(type='amount', value=10000).first().product_set.first(), self.item1)
+        self.assertEqual(Discount.objects.filter(type='amount', value=10000).first().product_set.first(), self.item1)
         self.assertIsNone(Product.objects.filter(discount__type='percent').first())
         self.assertEqual(self.item1.final_price, 5000)
         self.assertEqual(self.item2.final_price, 15000)
         self.assertEqual(self.item3.final_price, 0)
         self.assertEqual(self.item4.final_price, 0)
         self.assertIsNotNone(self.dis8.unique_token)
+
+    def test_base_attributes(self):
+        self.item1.is_active = False
+        self.assertFalse(self.item1.is_active)
+        self.assertFalse(self.item2.is_deleted)
+        self.item2.delete()
+        self.assertTrue(self.item2.is_deleted)
+        self.item2.brand = self.brand2
+        self.item2.save()
+        self.assertEqual(self.item2.last_update.minute, datetime.utcnow().minute)
+        self.assertEqual(self.item2.last_update.second, datetime.utcnow().second)
+
+    def test_activation_base_model(self):
+        self.item1.deactivate()
+        self.assertFalse(self.item1.is_active)
+        self.item1.activate()
+        self.assertTrue(self.item1.is_active)
+        self.assertEqual(repr(self.brand1), str(self.brand1))
 
     def tearDown(self) -> None:
         settings.TIME_ZONE = 'Asia/Tehran'

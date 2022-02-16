@@ -48,19 +48,16 @@ class Discount(BaseModel):
         else:
             self.max_price = value
 
-
-
-
-
     def profit(self, price):
         if self.type == 'percent':
-            return min(self.max_price, int(self.value*price/100)) if self.max_price else self.value * price / 100
+            raw = int(self.value * price / 100)
+            return min(self.max_price, raw) if self.max_price else raw
         elif self.type == 'amount':
             return self.value if price - self.value > 0 else price
         else:
             raise AttributeError("discount type is not defined!")
 
-    def is_valid(self):
+    def is_valid(self, code=None):
         if datetime.today().date() > self.expire_date:
             self.is_active = False
             raise ValidationError("The discount has expired!")
@@ -77,7 +74,7 @@ class OffCode(Discount):
     title = models.CharField(max_length=127, default="Season OFF!", verbose_name=_("Title"))
     min_buy_price = models.IntegerField(default=25000, verbose_name=_("Minimum buy amount"))
 
-    def is_valid(self, code):
+    def is_valid(self, code=None):  ### super?
         if self.unique_token == code:
             if datetime.today().date() > self.expire_date:
                 self.is_active = False
@@ -85,6 +82,9 @@ class OffCode(Discount):
             self.is_active = True
             return True
         return False
+
+    def profit(self, price):
+        return super().profit(price) if self.min_buy_price < price else 0
 
 
 class Product(BaseModel):
@@ -101,6 +101,7 @@ class Product(BaseModel):
                                  verbose_name=_("Discount"))
     available_count = models.IntegerField(verbose_name=_("Available number in store"), default=10)
     description = models.TextField(null=True, blank=True, verbose_name=_("Description"))
+
     # properties = models.JSONField(verbose_name=_("Product Properties"), null=True, default=None) (test writing)
 
     @property

@@ -9,8 +9,12 @@ class CartItem(BaseModel):
         verbose_name = _("Cart item")
 
     product = models.ForeignKey(Product, on_delete=models.RESTRICT, verbose_name=_("Product"))
-    count = models.SmallIntegerField(verbose_name=_("Number of product"))  # TODO: check available number
+    count = models.SmallIntegerField(verbose_name=_("Number of product"), default=1)  # TODO: check available number
     cart = models.ForeignKey('Cart', on_delete=models.CASCADE, verbose_name=_("Basket"), related_name='items')
+
+    @property
+    def final_price(self):
+        return self.product.final_price * int(self.count)
 
 
 class Cart(BaseModel):
@@ -21,7 +25,8 @@ class Cart(BaseModel):
     off_code = models.ForeignKey(OffCode, default=None, null=True, on_delete=models.SET_NULL, verbose_name=_("OffCode"))
     status = models.CharField(max_length=20,
                               choices=[('unfinished', "Unfinished"), ('unpaid', 'Unpaid'), ('paid', 'Paid')],
-                              verbose_name=_("Basket Status"))
+                              verbose_name=_("Basket Status"),
+                              default='unfinished')
     receipt = models.OneToOneField('Receipt', on_delete=models.SET_NULL, null=True, default=None,
                                    verbose_name=_("Receipt"))
     # TODO: create a receipt when status of cart is paid
@@ -40,3 +45,18 @@ class Receipt(BaseModel):
         cart = self.cart
         cart: Cart
         return cart.items.values_list('product', flat=True)
+
+    @property
+    def total_price(self):
+        prices = [x.final_price for x in self.cart.items.all()]
+        return sum(prices)
+    #  Test it with aggregation function
+
+    @property
+    def order_discount(self):
+        return self.cart.off_code.profit(self.total_price)
+
+    @property
+    def final_price(self):
+        return self.total_price - self.order_discount
+

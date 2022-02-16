@@ -16,6 +16,7 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
+        get_latest_by = "create_timestamp"
 
     def delete(self, using=None, keep_parents=False):
         self.is_deleted = True
@@ -39,4 +40,5 @@ class BaseModel(models.Model):
         return repr(self)
 
     def __repr__(self):
-        return str(self.__class__.objects.values().filter(id=self.id))
+        # return str(self.__class__.objects.values().filter(id=self.id))
+        return 'OK'
