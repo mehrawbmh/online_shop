@@ -11,10 +11,14 @@ class Customer(models.Model):
         on_delete=models.CASCADE
     )
 
+    def __repr__(self):
+        return f"Customer {self.user.username}"
+
 
 class Address(BaseModel):
     class Meta:
         verbose_name = _("Address")
+        verbose_name_plural = _("Addresses")
 
     province = models.CharField(
         max_length=30
@@ -22,7 +26,7 @@ class Address(BaseModel):
     city = models.CharField(
         max_length=30
     )
-    region = models.IntegerField(
+    region = models.PositiveSmallIntegerField(
         blank=True,
         null=True
     )
@@ -35,7 +39,9 @@ class Address(BaseModel):
     alley = models.CharField(
         max_length=40
     )
-    number = models.IntegerField(
+    number = models.PositiveSmallIntegerField(
+    )
+    house_floor = models.PositiveSmallIntegerField(
     )
     postal_code = models.CharField(
         max_length=10,
@@ -47,3 +53,6 @@ class Address(BaseModel):
         to=Customer,
         on_delete=models.DO_NOTHING
     )
+
+    def __repr__(self):
+        return f'Address {self.id} for {self.customer}'

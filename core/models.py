@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.datetime_safe import datetime
-from core.managers import BaseManager
+from core.managers import BaseManager, UsersManager
 from django.utils.translation import gettext_lazy as _
 
 
@@ -64,8 +64,17 @@ class BaseModel(models.Model):
 class User(AbstractUser):
     class Meta:
         verbose_name = _("User")
+    objects = UsersManager()
+    USERNAME_FIELD = 'phone'
+    phone = models.CharField(
+        max_length=16,
+        # blank=True,
+        # null=True,
+        unique=True
+    )
 
-    phone = models.CharField(max_length=16, unique=True)
+    def __repr__(self):
+        return f'{self.username}'
 
 
 class BaseDiscount(BaseModel):
