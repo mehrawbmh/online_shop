@@ -29,11 +29,13 @@ class CartItem(BaseModel):
         blank=True
     )
 
-    @property
-    def final_price(self):
+    def calc_final_price(self):
         self.total_price = self.product.final_price * int(self.count)
-        self.save()
         return self.total_price
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.calc_final_price()
+        return super().save(force_insert, force_update, using, update_fields)
 
     def __repr__(self):
         return f"for {self.cart} => {self.count} of {self.product}"
@@ -68,6 +70,11 @@ class Cart(BaseModel):
         to=Customer,
         on_delete=models.DO_NOTHING
     )
+    extra_info = models.TextField(
+        null=True,
+        blank=True,
+        help_text="more information about your order and how it would be sent"
+    )
     raw_price = models.IntegerField(
         blank=True,
         null=True
@@ -91,14 +98,17 @@ class Cart(BaseModel):
         return self.raw_price
 
     def order_discount_calc(self):
-        self.basket_discount = self.off_code.profit(self.raw_price)
-        return self.basket_discount
+        self.order_discount = self.off_code.profit(self.raw_price)
+        return self.order_discount
 
     def final_prize_calc(self):
         final_prize = self.raw_price_calc() - self.order_discount_calc()
         self.final_prize = final_prize
-        self.save()
         return self.final_prize
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.final_prize_calc()
+        return super().save(force_insert, force_update, using, update_fields)
 
     def __repr__(self):
         try:
