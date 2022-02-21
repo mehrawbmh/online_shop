@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.datetime_safe import datetime
 from core.managers import BaseManager, UsersManager
 from django.utils.translation import gettext_lazy as _
+from .validators import is_all_digit, is_11_characters, startswith_09
 
 
 class BaseModel(models.Model):
@@ -68,9 +69,8 @@ class User(AbstractUser):
     USERNAME_FIELD = 'phone'
     phone = models.CharField(
         max_length=16,
-        # blank=True,
-        # null=True,
-        unique=True
+        unique=True,
+        validators=[is_all_digit, startswith_09, is_11_characters]
     )
 
     def __repr__(self):
