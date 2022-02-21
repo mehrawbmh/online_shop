@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -114,6 +115,7 @@ LANGUAGE_CODE = 'en-us'
 LANGUAGES = (('en', 'English'), ('fa', 'Farsi'))
 LOCALE_PATHS = (BASE_DIR / 'locale',)
 
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -137,3 +139,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.User'
 LOGIN_URL = 'login_view'
 # LOGIN_REDIRECT_URL = ''
+
+

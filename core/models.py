@@ -37,9 +37,14 @@ class BaseModel(models.Model):
         abstract = True
         get_latest_by = "create_timestamp"
 
+    # LOGICAL DELETE!
     def delete(self, using=None, keep_parents=False):
         self.is_deleted = True
         self.save(using=using)
+
+    # ACTUAL DELETE FROM DATABASE
+    def hard_delete(self, using=None, keep_parents=False):
+        super().delete(using, keep_parents)
 
     def restore(self):
         self.is_deleted = False
