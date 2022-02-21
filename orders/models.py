@@ -4,6 +4,7 @@ from customers.models import Address, Customer
 from products.models import Product, _, OffCode
 from datetime import timedelta
 
+
 class CartItem(BaseModel):
     class Meta:
         verbose_name = _("Basket item")
@@ -23,10 +24,16 @@ class CartItem(BaseModel):
         verbose_name=_("Basket"),
         related_name='items'
     )
+    total_price = models.IntegerField(
+        null=True,
+        blank=True
+    )
 
     @property
     def final_price(self):
-        return self.product.final_price * int(self.count)
+        self.total_price = self.product.final_price * int(self.count)
+        self.save()
+        return self.total_price
 
     def __repr__(self):
         return f"for {self.cart} => {self.count} of {self.product}"
@@ -37,6 +44,9 @@ class Cart(BaseModel):
         verbose_name = _("Basket")
         verbose_name_plural = _("Baskets")
 
+    #     # TODO: implement a random id generator function for default of this field
+    #     unique_id = models.IntegerField(unique=True, primary_key=True, verbose_name=_("Unique id"))
+    #     delivery_time = models.DurationField(null=True, default=timedelta(days=1), blank=True,verbose_name=_("Will delivery at"))
     off_code = models.ForeignKey(
         OffCode,
         default=None,
@@ -58,44 +68,40 @@ class Cart(BaseModel):
         to=Customer,
         on_delete=models.DO_NOTHING
     )
+    raw_price = models.IntegerField(
+        blank=True,
+        null=True
+    )
+    order_discount = models.IntegerField(
+        blank=True,
+        null=True
+    )
+    final_prize = models.IntegerField(
+        blank=True,
+        null=True
+    )
 
-    # TODO: create a receipt when status of cart is paid
+    @property
+    def product_list(self):
+        return self.items.values_list('product', flat=True)
+
+    def raw_price_calc(self):
+        prices = [x.final_price for x in self.items.all()]
+        self.raw_price = sum(prices)
+        return self.raw_price
+
+    def order_discount_calc(self):
+        self.basket_discount = self.off_code.profit(self.raw_price)
+        return self.basket_discount
+
+    def final_prize_calc(self):
+        final_prize = self.raw_price_calc() - self.order_discount_calc()
+        self.final_prize = final_prize
+        self.save()
+        return self.final_prize
 
     def __repr__(self):
         try:
             return f"Cart {self.id}({self.status})"
-        except:
+        except AttributeError:
             return f"Temporary Cart"
-
-# class Receipt(BaseModel):
-#     class Meta:
-#         verbose_name = _("Receipt")
-#
-#     unique_id = models.IntegerField(unique=True, primary_key=True, verbose_name=_("Unique id"))
-#     # TODO: implement a random id generator function for default of this field
-#     delivery_time = models.DurationField(null=True, default=timedelta(days=1), blank=True,
-#                                          verbose_name=_("Will delivery at"))
-#
-#     @property
-#     def product_list(self):
-#         cart = self.cart
-#         cart: Cart
-#         return cart.items.values_list('product', flat=True)
-#
-#     @property
-#     def total_price(self):
-#         prices = [x.final_price for x in self.cart.items.all()]
-#         return sum(prices)
-#
-#     #  Test it with aggregation function
-#
-#     @property
-#     def order_discount(self):
-#         return self.cart.off_code.profit(self.total_price)
-#
-#     @property
-#     def final_price(self):
-#         return self.total_price - self.order_discount
-#
-#     def __repr__(self):
-#         return f"Receipt {self.unique_id}"
