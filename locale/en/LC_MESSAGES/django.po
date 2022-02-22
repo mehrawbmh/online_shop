@@ -146,7 +146,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Product"
 msgid "Products"
-msgstr "محصول"
+msgstr ""
 
 #: products/models.py:126
 msgid "Product name"

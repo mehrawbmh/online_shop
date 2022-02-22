@@ -68,7 +68,7 @@ msgstr ""
 
 #: orders/models.py:15 products/models.py:119
 msgid "Product"
-msgstr "محصول"
+msgstr ""
 
 #: orders/models.py:18
 msgid "Number of product"

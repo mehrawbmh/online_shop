@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.urls import reverse_lazy
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -131,8 +133,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.User'
-LOGIN_URL = 'login_view'
-# LOGIN_REDIRECT_URL = ''
+LOGIN_URL = 'login/'
+LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
@@ -230,6 +232,7 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "core.user": "fas fa-user",
         "auth.Group": "fas fa-users",
+        # "orders.Cart": "fas fa-shop"
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -239,7 +242,7 @@ JAZZMIN_SETTINGS = {
     # Related Modal #
     #################
     # Use modals instead of popups
-    "related_modal_active": False,
+    "related_modal_active": True,
 
     #############
     # UI Tweaks #
