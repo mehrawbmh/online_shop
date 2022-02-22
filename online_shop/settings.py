@@ -134,7 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.User'
 LOGIN_URL = 'login/'
-LOGIN_REDIRECT_URL = reverse_lazy('index/')
+LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
