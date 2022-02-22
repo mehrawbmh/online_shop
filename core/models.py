@@ -78,8 +78,13 @@ class User(AbstractUser):
         validators=[is_all_digit, startswith_09, is_11_characters]
     )
 
-    def __repr__(self):
-        return f'{self.username}'
+    def __str__(self):
+        if self.is_superuser:
+            return f'superuser:{self.username}'
+        elif self.is_staff:
+            return f'staff: {self.username}'
+        else:
+            return f'Customer: {self.username}'
 
 
 class BaseDiscount(BaseModel):
