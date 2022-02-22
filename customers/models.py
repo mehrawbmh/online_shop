@@ -5,11 +5,23 @@ from core.models import User, BaseModel, _
 class Customer(models.Model):
     class Meta:
         verbose_name = _("Customer")
-
+    birthday = models.DateField(
+        blank=True,
+        null=True
+    )
+    national_code = models.CharField(
+        max_length=11,
+        null=True,
+        blank=True
+    )
     user = models.OneToOneField(
         to=User,
         on_delete=models.CASCADE
     )
+
+    @property
+    def address_list(self):
+        return Address.objects.filter(customer=self).all()
 
     def __repr__(self):
         return f"Customer {self.user.username}"

@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.datetime_safe import datetime
 from core.models import BaseModel, BaseDiscount
 from django.utils.translation import gettext_lazy as _
+from .validators import is_positive
 
 
 class Category(BaseModel):
@@ -46,7 +47,8 @@ class Brand(BaseModel):
     satisfaction_rate = models.PositiveIntegerField(
         verbose_name=_("Satisfaction rating"),
         null=True,
-        blank=True
+        blank=True,
+        validators=[check_percent_range]
     )
     bio = models.TextField(
         null=True,
@@ -84,7 +86,7 @@ class OffCode(BaseDiscount):
     unique_token = models.CharField(
         max_length=50,
         verbose_name=_("Unique token"),
-        unique=True
+        unique=True,
     )
     # TODO: a function in utils that makes unique code
     title = models.CharField(
@@ -127,8 +129,9 @@ class Product(BaseModel):
         db_index=True
     )
     price = models.IntegerField(
-        verbose_name=_("Product price")
-    )  # TODO: validator!
+        verbose_name=_("Product price"),
+        validators=[is_positive]
+    )
     brand = models.ForeignKey(
         Brand,
         on_delete=models.CASCADE
@@ -148,7 +151,8 @@ class Product(BaseModel):
     )
     available_count = models.IntegerField(
         verbose_name=_("Available number in store"),
-        default=10
+        default=10,
+        validators=[is_positive]
     )
     description = models.TextField(
         null=True,

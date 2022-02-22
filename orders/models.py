@@ -3,6 +3,7 @@ from core.models import BaseModel
 from customers.models import Address, Customer
 from products.models import Product, _, OffCode
 from datetime import timedelta
+from .validators import check_positive_not_zero
 
 
 class CartItem(BaseModel):
@@ -16,7 +17,8 @@ class CartItem(BaseModel):
     )
     count = models.SmallIntegerField(
         verbose_name=_("Number of product"),
-        default=1
+        default=1,
+        validators=[check_positive_not_zero]
     )  # TODO: check available number
     cart = models.ForeignKey(
         'Cart',
@@ -26,7 +28,8 @@ class CartItem(BaseModel):
     )
     total_price = models.IntegerField(
         null=True,
-        blank=True
+        blank=True,
+        validators=[check_positive_not_zero]
     )
 
     def calc_final_price(self):
