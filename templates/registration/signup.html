@@ -1,0 +1,35 @@
+{% extends 'layout/_base.html' %}
+
+{% block  main_body%}
+    <div class="container-fluid myform">
+    <center>
+        <h3>Customers Signup</h3>
+        <form action="{% url 'login_view' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="register">
+        </form>
+    </center>
+    </div>
+{% endblock %}
+
+
+{% block style %}
+<style>
+    .myform{
+        height: 500px;
+        padding: 50px;
+        width: 100%;
+        background-color: #B4F8C8;
+    }
+    .myform h3{
+        text-align: center;
+        margin: 40px;
+    }
+    .myform h3:hover{
+        background-color: black;
+        color: red;
+    }
+
+</style>
+{% endblock %}

@@ -1,0 +1,85 @@
+/*
+site color pallete:
+Yellow
+#FBE7C6
+
+Mint(green)
+#B4F8C8
+
+Tiffany Blue
+#A0E7E5
+
+Hot Pink
+#FFAEBC
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.mainbody {
+    background-color: #A0E7E5;
+}
+
+h2 {
+    background-color: #FFAEBC;
+    color: #B4F8C8
+
+
+}
+
+/* footer styles */
+
+.footer {
+    background-color: #FFAEBC;
+    color: #8a8a8a;
+    font-size: 16px;
+    padding: 60px 0 20px;
+}
+
+.footer p {
+    color: #8a8a8a;
+}
+
+.footer h3 {
+    color: darkblue;
+    margin-bottom: 20px;
+}
+
+.footer-col {
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+
+.footer-col-second {
+    text-align: center;
+}
+
+.footer-col-second img {
+    width: 180px;
+    margin-bottom: 20px;
+    padding-top: 50px;
+    padding-right: 30px;
+    height: 200px;
+}
+
+.footer-col-third, .footer-col-fourth {
+    text-align: center;
+}
+
+.footer ul {
+    list-style-type: none;
+}
+
+.footer hr {
+    border: none;
+    background-color: #b5b5b5;
+    height: 1px;
+    margin: 20px 0
+}
+
+.footer .copyright {
+    text-align: center;
+}

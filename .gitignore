@@ -129,7 +129,8 @@ dmypy.json
 .pyre/
 
 .idea/
-core/migrations/
+
 orders/migrations/
-products/migrations/
 customers/migrations/
+products/migrations/
+core/migrations/
