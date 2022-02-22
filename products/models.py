@@ -84,6 +84,7 @@ class Discount(BaseDiscount):
         else:
             return f"{self.value} Tooman Discount"
 
+
 class OffCode(BaseDiscount):
     class Meta:
         verbose_name = _("Off Code")
@@ -178,5 +179,3 @@ class Product(BaseModel):
 
     def __repr__(self):
         return f"Product {self.name} from brand {self.brand.name}"
-
-

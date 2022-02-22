@@ -4,3 +4,5 @@ from django.views.generic import ListView, TemplateView
 
 class ProductListView(TemplateView):
     template_name = 'products/index.html'
+
+
