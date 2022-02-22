@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.datetime_safe import datetime
 from core.models import BaseModel, BaseDiscount
 from django.utils.translation import gettext_lazy as _
-from .validators import is_positive
+from .validators import is_positive, check_percent_range
 
 
 class Category(BaseModel):
@@ -78,6 +78,11 @@ class Discount(BaseDiscount):
     def __repr__(self):
         return f"{self.type} Discount => {self.value}"
 
+    def __str__(self):
+        if self.type == 'percent':
+            return f"{self.value} percent Discount"
+        else:
+            return f"{self.value} Tooman Discount"
 
 class OffCode(BaseDiscount):
     class Meta:

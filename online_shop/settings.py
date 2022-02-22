@@ -134,7 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.User'
 LOGIN_URL = 'login/'
-LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGIN_REDIRECT_URL = reverse_lazy('index/')
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
@@ -232,6 +232,7 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "core.user": "fas fa-user",
         "auth.Group": "fas fa-users",
+        "customers.Customer": "fas fa-user"
         # "orders.Cart": "fas fa-shop"
     },
     # Icons that are used when one is not manually specified
@@ -242,7 +243,7 @@ JAZZMIN_SETTINGS = {
     # Related Modal #
     #################
     # Use modals instead of popups
-    "related_modal_active": True,
+    "related_modal_active": False,
 
     #############
     # UI Tweaks #
