@@ -23,10 +23,18 @@ Hot Pink
     background-color: #A0E7E5;
 }
 
-h2 {
-    background-color: #FFAEBC;
-    color: #B4F8C8
+.before-off-price{
+    text-decoration: line-through;
+    color:gray;
+    font-size: small;
+}
 
+.after-off-price{
+    color:black;
+    font-size: medium;
+}
+
+.product-card{
 
 }
 

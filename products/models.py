@@ -27,6 +27,19 @@ class Category(BaseModel):
         verbose_name=_("Category parent")
     )
 
+    @property
+    def cat_order(self):
+        count = 0
+        while self.parent:
+            count += 1
+            self = self.parent
+        return count
+
+    @classmethod
+    def get_max_order(cls):
+        degree_list = [x.cat_order for x in cls.objects.all()]
+        return max(degree_list)
+
     def __repr__(self):
         if self.parent:
             return f'Sub Category => {self.name}'

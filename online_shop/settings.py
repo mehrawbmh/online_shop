@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import logging
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import django.utils.log
 from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -135,6 +136,55 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.User'
 LOGIN_URL = 'login/'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} ({asctime}): {message} at {module} (process: {process}, thread: {thread})',
+            'style': '{'
+        },
+        'short': {
+            'format': '%(levelname)s: %(time)s > %(message)s',
+            'style': '%'
+        },
+    },
+    'filters': {
+        'length_limit': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda message: len(str(message)) < 20
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            'level': 'ERROR'
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs.log',
+            'formatter': 'short',
+            'filters': ['length_limit', ]
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+    'loggers': {
+        'project': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+        },
+        'project.developers': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    }
+}
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)

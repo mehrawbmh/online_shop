@@ -1,0 +1,18 @@
+<div class="card product-card">
+    <img class="card-img-top" src="{{ product.image.url }}" alt="">
+    <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        {% if product.discount %}
+            <p class="card-text text-center before-off-price">{{ product.price }}</p>
+            <p class="card-text text-center after-off-price">{{ product.price }}</p>
+        {% else %}
+            <p class="card-text text-center after-off-price">{{ product.price }}</p>
+        {% endif %}
+        <p class="card-text text-center">{{ product.price }}</p>
+    </div>
+    <div class="card-body">
+        <a href="#" class="card-link">Add to cart</a>
+        {#      todo add cart icon#}
+        <h6 class="text-center">{{ product.brand.name }}</h6>
+    </div>
+</div>
