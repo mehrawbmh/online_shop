@@ -1,6 +1,6 @@
 from django.contrib.auth.models import UserManager
 from django.db import models
-
+from .utils import phone_normalize
 
 class BaseManager(models.Manager):
     def get_queryset(self):
@@ -18,11 +18,15 @@ class BaseManager(models.Manager):
 
 class UsersManager(UserManager):
     def create_user(self, username=None, email=None, password=None, **extra_fields):
-        username = extra_fields['phone']
+        extra_fields['phone'] = phone_normalize(extra_fields['phone'])
+        phone = extra_fields['phone']
+        username = phone
         return super().create_user(username, email, password, **extra_fields)
 
     def create_superuser(self, username=None, email=None, password=None, **extra_fields):
-        username = extra_fields['phone']
+        extra_fields['phone'] = phone_normalize(extra_fields['phone'])
+        phone = extra_fields['phone']
+        username = phone
         return super().create_superuser(username, email, password, **extra_fields)
 
 
