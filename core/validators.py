@@ -21,6 +21,12 @@ def is_all_digit(phone: str):
     return True
 
 
+def is_all_numeric(national_code: str):
+    if not national_code.isnumeric():
+        raise ValidationError('National Code must be all digits!')
+    return True
+
+
 def startswith_09(phone):
     phone = phone_normalize(phone)
     if not phone.startswith('09'):

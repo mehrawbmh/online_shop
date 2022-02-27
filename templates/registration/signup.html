@@ -4,9 +4,16 @@
     <div class="container-fluid myform">
     <center>
         <h3>Customers Signup</h3>
-        <form action="{% url 'login_view' %}" method="post">
+        <form action="{% url 'register_view' %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% for item in form %}
+                <h4>{{ item.label }}:</h4>
+                <p>{{ item }}</p>
+                {% if item.errors %}
+                    {{ item.errors }}
+                {% endif %}
+                <br>
+            {% endfor %}
             <input type="submit" value="register">
         </form>
     </center>
@@ -17,7 +24,6 @@
 {% block style %}
 <style>
     .myform{
-        height: 500px;
         padding: 50px;
         width: 100%;
         background-color: #B4F8C8;
