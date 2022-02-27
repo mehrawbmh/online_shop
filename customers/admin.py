@@ -13,7 +13,7 @@ class AddressInline(TabularInline):
 
 @admin.register(Customer)
 class CustomerAdmin(ModelAdmin):
-    list_display = ['id', 'user']
+    list_display = ['id', 'user', 'birthday', 'national_code']
     list_display_links = ['id']
     inlines = [AddressInline]
     empty_value_display = 'EMPTY'

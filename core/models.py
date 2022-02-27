@@ -5,7 +5,9 @@ from django.db import models
 from django.utils.datetime_safe import datetime
 from core.managers import BaseManager, UsersManager
 from django.utils.translation import gettext_lazy as _
-from .validators import is_all_digit, is_11_characters, startswith_09
+
+from .utils import phone_normalize
+from .validators import is_all_digit, is_11_characters, startswith_09, check_all_phone_validations
 
 
 class BaseModel(models.Model):
@@ -81,16 +83,25 @@ class User(AbstractUser):
     )
 
     def __str__(self):
+        name_format = self.get_full_name() if self.first_name or self.last_name else self.username
         if self.is_superuser:
-            return f'superuser:{self.username}'
+            return f'superuser: {name_format}'
         elif self.is_staff:
-            return f'staff: {self.username}'
+            return f'staff: {name_format}'
         else:
-            return f'Customer: {self.username}'
+            return f'Customer: {name_format}'
 
     def save(self, *args, **kwargs):
-        self.phone = self.username
+        self.username = self.phone
+        # try:
+        #     self.full_clean()
+        # except ValidationError:
+        #     pass
         return super().save(*args, **kwargs)
+
+    def full_clean(self, exclude=None, validate_unique=True):
+        old_username = self.username
+        self.username = self.phone if check_all_phone_validations(self.phone) else old_username
 
 
 class BaseDiscount(BaseModel):
