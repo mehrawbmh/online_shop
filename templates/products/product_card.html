@@ -1,5 +1,9 @@
 <div class="card product-card">
-    <img class="card-img-top" src="{{ product.image.url }}" alt="">
+    {% if product.image %}
+        <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}">
+    {% else %}
+        <img class="card-img-top" src="{% static 'products/default.jpg' %}">
+    {% endif %}
     <div class="card-body">
         <h5 class="card-title">{{ product.name }}</h5>
         {% if product.discount %}

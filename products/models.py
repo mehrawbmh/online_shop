@@ -178,12 +178,16 @@ class Product(BaseModel):
         blank=True,
         verbose_name=_("Description")
     )
-
     properties = models.JSONField(
         verbose_name=_("Product Properties"),
         null=True,
         default=None,
         blank=True
+    )
+    image = models.ImageField(
+        verbose_name=_("Product image"),
+        blank=True,
+        null=True,
     )
 
     @property
