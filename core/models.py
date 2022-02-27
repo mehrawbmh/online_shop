@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.datetime_safe import datetime
@@ -70,12 +71,13 @@ class BaseModel(models.Model):
 class User(AbstractUser):
     class Meta:
         verbose_name = _("User")
+
     objects = UsersManager()
     USERNAME_FIELD = 'phone'
     phone = models.CharField(
         max_length=16,
         unique=True,
-        validators=[is_all_digit, startswith_09, is_11_characters]
+        validators=[is_all_digit, startswith_09, is_11_characters],
     )
 
     def __str__(self):
@@ -85,6 +87,10 @@ class User(AbstractUser):
             return f'staff: {self.username}'
         else:
             return f'Customer: {self.username}'
+
+    def save(self, *args, **kwargs):
+        self.phone = self.username
+        return super().save(*args, **kwargs)
 
 
 class BaseDiscount(BaseModel):
