@@ -35,8 +35,9 @@ class CustomerForm(ModelForm):
     )
 
     def clean(self):
-        if self.is_valid():
-            if self.cleaned_data['password'] != self.cleaned_data['password_confirm']:
-                raise ValidationError("Password confirmation doesn't match with password")
-            print(self.cleaned_data)
-        return super().clean()
+        cleaned_data = super().clean()
+        if cleaned_data['password'] != cleaned_data['password_confirm']:
+            self.add_error(
+                'password_confirm',
+                ValidationError("Password confirmation doesn't match with password")
+            )

@@ -3,11 +3,14 @@
 {% block  main_body%}
     <div class="container-fluid myform">
     <center>
-        <h3>Customers Login</h3>
+        <h3 class="card-header">Customers Login</h3>
         <form action="{% url 'login_view' %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Log in">
+            <table>
+                {{ form.as_table }}
+            </table>
+            <br>
+            <input type="submit" class="btn btn-primary" value="Log in">
         </form>
     </center>
     </div>
@@ -29,6 +32,17 @@
     .myform h3:hover{
         background-color: black;
         color: red;
+    }
+    form label{
+        padding: 10px;
+    }
+    form table{
+        border: 3px solid rebeccapurple;
+        padding:20px;
+        margin: 20px;
+    }
+    form table input{
+        margin: 20px;
     }
 
 </style>

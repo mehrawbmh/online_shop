@@ -52,7 +52,6 @@ class CustomerSignUpView(FormView):
         # return super().form_valid(form)
 
     def form_invalid(self, form):
-        print("invalid:", form)
         return render(self.request, template_name=self.template_name, context={'form': form})
 
 
