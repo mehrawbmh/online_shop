@@ -20,7 +20,7 @@ Hot Pink
 }
 
 .mainbody {
-    background-color: #A0E7E5;
+    background-color: #FBE7C6;
 }
 
 .before-off-price{
@@ -33,6 +33,7 @@ Hot Pink
 }
 
 .product-card{
+    margin-bottom: 5px;
 }
 .prod-image{
     height: 200px!important;
@@ -41,10 +42,10 @@ Hot Pink
 /* footer styles */
 
 .footer {
-    background-color: #FFAEBC;
+    background-color: #B4F8C8;
     color: #8a8a8a;
     font-size: 16px;
-    padding: 60px 0 20px;
+    padding: 40px 0 20px;
 }
 
 .footer p {
@@ -68,7 +69,7 @@ Hot Pink
 .footer-col-second img {
     width: 180px;
     margin-bottom: 20px;
-    padding-top: 50px;
+    padding-top: 30px;
     padding-right: 30px;
     height: 200px;
 }
