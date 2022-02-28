@@ -1,7 +1,10 @@
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, DetailView
+
+from core.models import User
 from customers.forms import CustomerForm
 from customers.models import Customer
 from django.forms import Form
@@ -14,7 +17,8 @@ class CustomerLoginView(LoginView):
 class CustomerSignUpView(FormView):
     template_name = 'registration/signup.html'
     form_class = CustomerForm
-    success_url = reverse_lazy('customer_profile')
+    # pro_id = 0
+    # success_url = reverse_lazy('customer_profile', args={'pk':pro_id})
 
     # def get(self, req, *args, **kwargs):
     #     return super().get(req, *args, **kwargs)
@@ -29,11 +33,26 @@ class CustomerSignUpView(FormView):
     #     context = super().get_context_data(**kwargs)
     #     context['form'] = self.get_form()
     #     return context
-
     def form_valid(self, form):
-        pass
+        related_user = User.objects.create_user(
+            form['phone'].value(),
+            form['email'].value(),
+            form['password'].value(),
+            phone=form['phone'].value(),
+            first_name=form['first_name'].value(),
+            last_name=form['last_name'].value()
+        )
+        customer = Customer.objects.create(
+            birthday=form['birthday'].value(),
+            national_code=form['national_code'].value(),
+            user=related_user
+        )
+        return redirect(reverse_lazy('customer_profile', kwargs={'pk':customer.id}))
+        # self.__class__.pro_id = customer.id
+        # return super().form_valid(form)
 
     def form_invalid(self, form):
+        print("invalid:", form)
         return render(self.request, template_name=self.template_name, context={'form': form})
 
 

@@ -25,17 +25,17 @@ Hot Pink
 
 .before-off-price{
     text-decoration: line-through;
-    color:gray;
-    font-size: small;
+    font-size: larger;
 }
 
 .after-off-price{
-    color:black;
-    font-size: medium;
+    font-size: larger;
 }
 
 .product-card{
-
+}
+.prod-image{
+    height: 200px!important;
 }
 
 /* footer styles */
@@ -57,7 +57,7 @@ Hot Pink
 }
 
 .footer-col {
-    min-width: 250px;
+    /*min-width: 250px;*/
     margin-bottom: 20px;
 }
 
@@ -91,3 +91,4 @@ Hot Pink
 .footer .copyright {
     text-align: center;
 }
+

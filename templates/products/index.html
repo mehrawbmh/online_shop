@@ -4,9 +4,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 {% endblock %}
 {% block main_body %}
-    {{ block.super }}
-    {% for product in products %}
-        {% include 'products/product_card.html' with product=product %}
-    {% endfor %}
+    <div class="container-fluid">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-12 col-md-6 col-lg-3">
+                    {% include 'products/product_card.html' with product=product %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}

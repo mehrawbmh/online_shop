@@ -1,41 +1,54 @@
 {% extends 'layout/_base.html' %}
 
-{% block  main_body%}
+{% block  main_body %}
     <div class="container-fluid myform">
-    <center>
-        <h3>Customers Signup</h3>
-        <form action="{% url 'register_view' %}" method="post">
-            {% csrf_token %}
-            {% for item in form %}
-                <h4>{{ item.label }}:</h4>
-                <p>{{ item }}</p>
-                {% if item.errors %}
-                    {{ item.errors }}
-                {% endif %}
-                <br>
-            {% endfor %}
-            <input type="submit" value="register">
-        </form>
-    </center>
+        <center>
+            <h3>Customers Signup</h3>
+            <form action="{% url 'register_view' %}" method="post">
+                {% csrf_token %}
+                {% for item in form %}
+                    <h4>{{ item.label }}:</h4>
+                    <p>{{ item }}</p>
+                    {% if item.errors %}
+                        {{ item.errors }}
+                    {% endif %}
+                    <br>
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="register" onclick="check_pass()">
+            </form>
+        </center>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        function check_pass() {
+            alert('NNOOO')
+            n1 = $('password').val()
+            n2 = $('password_confirm').val()
+            alert(n1,n2)
+        }
+    </script>
 {% endblock %}
 
 
 {% block style %}
-<style>
-    .myform{
-        padding: 50px;
-        width: 100%;
-        background-color: #B4F8C8;
-    }
-    .myform h3{
-        text-align: center;
-        margin: 40px;
-    }
-    .myform h3:hover{
-        background-color: black;
-        color: red;
-    }
+    <style>
+        .myform {
+            padding: 50px;
+            width: 100%;
+            background-color: #B4F8C8;
+        }
 
-</style>
+        .myform h3 {
+            text-align: center;
+            margin: 40px;
+        }
+
+        .myform h3:hover {
+            background-color: black;
+            color: red;
+        }
+
+    </style>
 {% endblock %}
