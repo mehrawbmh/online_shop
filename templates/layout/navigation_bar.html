@@ -1,35 +1,64 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FBE7C6!important;">
-  <a class="navbar-brand" href="#">Mehrab online shop</a>
+  <a class="navbar-brand" style="font-family: 'Audiowide', sans-serif" href="#">Mehrab online shop</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
-      </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'login_view' %}">Log in</a>
+        <a class="nav-link" href="{% url 'index' %}"><i class="fa fa-home"> Home</i><span class="sr-only">(current)</span></a>
       </li>
+        {% if not request.user.is_authenticated %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'login_view' %}">Log in</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'register_view' %}">Sign up</a>
+        </li>
+        {% elif request.user.customer_set %}
+            <li>
+            <a class="nav-link " href="{% url 'customer_profile'  request.user.id  %}"><i class="fa fa-user-tie"> Profile</i></a>
+            </li>
+        {% else %}
+            <li>
+                <a class="nav-link " href="/admin/core/user/{{ request.user.id }}"><i class="fa fa-user-tie"> Profile</i></a>
+            </li>
+        {% endif %}
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Categories
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+          <a class="nav-link dropdown-toggle active" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-list"></i> Categories
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {% for category in categories %}
+                {% if not category.parent %}
+{#              <a class="dropdown-item" href="#">{{ category.name }}</a>#}
+{#                    <div class="btn btn-primary">{{ category.name }}</div>#}
+{#                    <b style="text-align: center;padding: 2px">{{ category.name }}</b>#}
+                    <div class="text-primary text-center">{{ category.name }}</div>
+                      {% for cat in categories %}
+                          {% if cat.parent == category %}
+                              <a class="dropdown-item" href="#">{{ cat.name }}</a>
+                          {% endif %}
+                      {% endfor %}
+                    {% if not forloop.last %}
+                        <div class="dropdown-divider"></div>
+                    {% endif %}
+{#                      <a class="dropdown-item" href="#">Something else here</a>#}
+                {% endif %}
+              {% endfor %}
+          </div>
       </li>
-{#      <li class="nav-item">#}
-{#        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>#}
-{#      </li>#}
     </ul>
+    <a href="#" style="padding-right: 5px" class="text-secondary">
+      <i class="fa fa-shopping-cart"></i>
+        Your Basket
+    </a>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <input class="form-control mr-sm-2" type="search" placeholder="any product..." aria-label="Search">
+      <button class="btn btn-outline-success my-1 my-sm-1" type="submit">Search</button>
     </form>
+
   </div>
 </nav>
