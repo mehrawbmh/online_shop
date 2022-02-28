@@ -93,9 +93,12 @@ class Discount(BaseDiscount):
 
     def __str__(self):
         if self.type == 'percent':
-            return f"{self.value} percent Discount"
+            text = f"{self.value} percent Discount"
         else:
-            return f"{self.value} Tooman Discount"
+            text = f"{self.value} Tooman Discount"
+        if self.expire_date:
+            text += f'- expires at {self.expire_date}'
+        return text
 
 
 class OffCode(BaseDiscount):
@@ -132,7 +135,15 @@ class OffCode(BaseDiscount):
         return super().profit(price) if self.min_buy_price < price else 0
 
     def __repr__(self):
-        return f"{self.type} OffCode => {self.value}"
+        if self.type == 'percent':
+            string = f'{self.value}% OFF code'
+            if self.max_price:
+                string += f" - up to {self.max_price} Tooman"
+        else:
+            string = f'{self.value} Tooman OFF code'
+        if self.expire_date:
+            string += f' (expires at {self.expire_date})'
+        return string
 
 
 class Product(BaseModel):
@@ -171,7 +182,8 @@ class Product(BaseModel):
     available_count = models.IntegerField(
         verbose_name=_("Available number in store"),
         default=10,
-        validators=[is_positive]
+        validators=[is_positive],
+        blank=True
     )
     description = models.TextField(
         null=True,

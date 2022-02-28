@@ -12,7 +12,8 @@ class Customer(models.Model):
     national_code = models.CharField(
         max_length=11,
         null=True,
-        blank=True
+        blank=True,
+        unique=True
     )
     user = models.OneToOneField(
         to=User,
