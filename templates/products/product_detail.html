@@ -1,0 +1,79 @@
+{% extends 'layout/_base.html' %}
+{% load static %}
+{% block links %}
+    {{ block.super }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+{% endblock %}
+{% block main_body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-4">
+                {% if not product.image %}
+                    <img src="{% static 'products/default.jpg' %}" alt="{{ product.name }}">
+                {% else %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100%" class="img-dtl">
+                {% endif %}
+            </div>
+            <div class="col-12 col-md-8">
+                <h3 style="font-family: 'Ubuntu', sans-serif" class="text-center text-primary">{{ product.name }}</h3>
+                <hr>
+            <center>
+                <div class="prod-dtl">
+                    {% if product.discount %}
+                    <div class="LineDiv">
+                        <h4>Price:</h4>
+                        <p class="before-off-price">{{ product.price }}</p>
+                        <p class="after-off-price">{{ product.final_price }} Tooman</p>
+                    </div>
+                    {% else %}
+                    <div class="LineDiv">
+                        <h4>Price:</h4>
+                        <p>{{ product.price }} Tooman</p>
+                    </div>
+                    {% endif %}
+                    <div class="LineDiv">
+                        <h4>Brand:</h4>
+                        <p title="{{ product.brand.bio }}" class="badge badge-danger">{{ product.brand.name }}</p>
+                    </div>
+                    {% if product.description %}
+                        <div class="LineDiv">
+                            <h4>More info:</h4>
+                            <p class="text-secondary">{{ product.description }}</p>
+                        </div>
+                    {% endif %}
+                    {% if product.properties %}
+                        <div class="">
+                            <h4>Properties:</h4>
+                        <div style="padding-left: 40px">
+                            {% for key,value in product.properties.items %}
+                                <h5>{{ key }}:{{ value }}</h5>
+                            {% endfor %}
+                        </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <a type="button" href="#" class="btn btn-success w-25">Add to your Cart</a>
+
+            </center>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <style>
+        .img-dtl {
+            max-height: 400px;
+        }
+
+        .LineDiv * {
+            display: inline-block;
+        }
+        .prod-dtl{
+            padding-left: 50px;
+        }
+        .LineDiv p{
+            font-size: 18px;
+        }
+    </style>
+{% endblock %}

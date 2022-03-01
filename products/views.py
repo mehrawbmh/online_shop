@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from products.models import Product, Category
 
@@ -15,3 +15,14 @@ class ProductListView(ListView):
         context['categories'] = Category.objects.filter(is_active=True).all()
         return context
 
+
+class CategoryDetailView(DetailView):
+    model = Category
+    context_object_name = 'category'
+    template_name = 'products/category_detail.html'
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'products/product_detail.html'
+    context_object_name = 'product'

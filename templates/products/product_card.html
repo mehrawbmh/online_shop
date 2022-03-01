@@ -6,12 +6,12 @@
         <img class="card-img-top" src="{% static 'products/default.jpg' %}" width="100%" alt="{{ product.name }}" style="max-height: 300px">
     {% endif %}
     <div class="card-body">
-        <h5 class="card-title text-center">{{ product.name }}</h5>
+        <a href="{% url 'product_detail' product.id %}" class="card-title text-danger text-center"><h4>{{ product.name }}</h4></a>
         {% if product.discount %}
             <h6 class="card-text text-center before-off-price text-secondary">{{ product.price }} Tooman</h6>
             <h6 class="card-text text-center after-off-price text-info">{{ product.final_price }} Tooman</h6>
         {% else %}
-            <h6 class="card-text text-center after-off-price">{{ product.price }}</h6>
+            <h6 class="card-text text-center after-off-price">{{ product.price }} Tooman</h6>
         {% endif %}
     </div>
     <div class="card-body" style="text-align: center;">
