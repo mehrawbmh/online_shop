@@ -71,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'products.context_processor.show_cat',
             ],
         },
     },
@@ -188,7 +189,7 @@ LOGGING = {
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "Online Shop",
+    "site_title": "Mehrab Online Shop",
 
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_header": "Management",
@@ -206,7 +207,7 @@ JAZZMIN_SETTINGS = {
     "site_icon": None,
 
     # Welcome text on the login screen
-    "welcome_sign": "Welcome to the Mehrab Online Shop!",
+    "welcome_sign": "Welcome to your Online Shop!",
 
     # Copyright on the footer
     "copyright": "MHosseini/ maktab64/ 2022",
@@ -227,9 +228,6 @@ JAZZMIN_SETTINGS = {
         # Url that gets reversed (Permissions can be added)
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
 
-        # external url that opens in a new window (Permissions can be added)
-        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
-
         # model admin to link to (Permissions checked against model)
         {"model": "core.User"},
 
@@ -243,7 +241,6 @@ JAZZMIN_SETTINGS = {
 
     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
     "usermenu_links": [
-        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
         {"model": "core.user"}  # TODO check it
     ],
 
@@ -264,7 +261,7 @@ JAZZMIN_SETTINGS = {
     "hide_models": [],
 
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
+    "order_with_respect_to": ["core", "customers", "books.author", "books.book"],
 
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
@@ -282,7 +279,15 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "core.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-        "customers.Customer": "fas fa-user"
+        "customers.Customer": "fas fa-user",
+        "products.Product": "fa fa-product-hunt",
+        "products.Category": "fa fa-list",
+        "products.Brand":  "fas fa-chrome",
+        "products.discount": "fa fa-money-bill",
+        "products.off_code": "fa fa-money-bill-alt",
+        "orders.Cart": "fa fa-shopping-cart",
+        "orders.CartItem": "fa fa-shopping-bag",
+        "customers.Address": "fa fa-address-card"
         # "orders.Cart": "fas fa-shop"
     },
     # Icons that are used when one is not manually specified

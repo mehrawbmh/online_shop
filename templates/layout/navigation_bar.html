@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FBE7C6!important;">
-  <a class="navbar-brand" style="font-family: 'Audiowide', sans-serif" href="#">Mehrab online shop</a>
+  <a class="navbar-brand" style="font-family: 'Audiowide', sans-serif" href="#" id="ChangableTitle">Mehrab online shop</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -39,7 +39,7 @@
                     <div class="text-primary text-center">{{ category.name }}</div>
                       {% for cat in categories %}
                           {% if cat.parent == category %}
-                              <a class="dropdown-item" href="#">{{ cat.name }}</a>
+                              <a class="dropdown-item" href="{% url 'category_detail' cat.id %}">{{ cat.name }}</a>
                           {% endif %}
                       {% endfor %}
                     {% if not forloop.last %}

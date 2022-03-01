@@ -35,6 +35,14 @@ class Category(BaseModel):
             self = self.parent
         return count
 
+    @property
+    def full_set(self):
+        cat_list = []
+        for prod in Product.objects.all():
+            if prod.has_cat(self):
+                cat_list.append(prod)
+        return cat_list
+
     @classmethod
     def get_max_order(cls):
         degree_list = [x.cat_order for x in cls.objects.all()]
@@ -205,6 +213,13 @@ class Product(BaseModel):
     @property
     def final_price(self):
         return self.price - self.discount.profit(self.price) if self.discount else self.price
+
+    def has_cat(self, cat: Category):
+        for i in range(self.category.cat_order):
+            if self.category == cat:
+                return True
+            self.category = self.category.parent
+        return False
 
     def __repr__(self):
         return f"Product {self.name} from brand {self.brand.name}"
