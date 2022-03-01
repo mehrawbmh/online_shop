@@ -1,0 +1,22 @@
+{% extends 'layout/_base.html' %}
+{% block links %}
+    {{ block.super }}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+{% endblock %}
+{% block main_body %}
+<div class="container-fluid">
+<div class="row">
+    {% for product in category.full_set %}
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+            {% include 'products/product_card.html' %}
+        </div>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    $('#ChangableTitle').empty().append('{{ category.name }}')
+</script>
+{% endblock %}
