@@ -27,6 +27,9 @@ class Customer(models.Model):
     def __repr__(self):
         return f"Customer {self.user.username}"
 
+    def __str__(self):
+        return str(self.user)
+
 
 class Address(BaseModel):
     class Meta:

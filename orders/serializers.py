@@ -15,11 +15,6 @@ class CartItemSerializer(serializers.ModelSerializer):
     related_product = serializers.StringRelatedField(
         source='product',
     )
-    # cart = serializers.PrimaryKeyRelatedField(
-    #     required=True,
-    #     write_only=True,
-    #     queryset=Cart.objects.all()
-    # )
     related_cart = serializers.StringRelatedField(
         source='cart'
     )

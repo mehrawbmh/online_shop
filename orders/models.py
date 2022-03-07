@@ -127,6 +127,6 @@ class Cart(BaseModel):
 
     def __repr__(self):
         try:
-            return f"Cart {self.id}({self.status})"
+            return f"Cart {self.id}({self.status}) for {self.customer}"
         except AttributeError:
-            return f"Temporary Cart"
+            return f"Temporary Cart for {self.customer}"
