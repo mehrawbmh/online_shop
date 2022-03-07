@@ -1,10 +1,12 @@
 {% extends 'layout/_base.html' %}
 {% block links %}
     {{ block.super }}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 {% endblock %}
 {% block main_body %}
-    <div class="container-fluid" style="background-color: #A0E7E5;">
+    <div class="container-fluid" style="background-color: #A0E7E5;" id="siom">
         <div class="row">
             {% for product in products %}
                 <div class="col-12 col-md-4 col-lg-3 col-xl-2">
@@ -13,5 +15,30 @@
             {% endfor %}
         </div>
     </div>
+
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        function AddToCard(product_id) {
+            let text = document.getElementById(`click${product_id}button`).innerText
+            {% if request.user.is_authenticated %}
+            if (text !=='remove'){
+            $.post(
+                "{% url 'cart_api' %}",
+                {'csrfmiddlewaretoken': '{{ csrf_token }}', 'product': product_id},
+                function () {
+                    $(`#click${product_id}button`).empty().append('remove').removeClass('btn-warning').addClass('btn-danger')
+                }
+            )}
+            else{
+                {# TODO: delete cart item from database #}
+            }
+            {% else %}
+                console.log('Hamin!')
+            {% endif %}
+        }
+    </script>
 
 {% endblock %}

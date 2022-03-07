@@ -32,13 +32,22 @@ class CartItem(BaseModel):
         validators=[check_positive_not_zero]
     )
 
+    @property
+    def final_price(self):
+        return self.calc_final_price()
+
     def calc_final_price(self):
         self.total_price = self.product.final_price * int(self.count)
         return self.total_price
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.calc_final_price()
+        self.cart.save()
         return super().save(force_insert, force_update, using, update_fields)
+
+    def delete(self, using=None, keep_parents=False):
+        super().delete(using, keep_parents)
+        self.cart.save()
 
     def __repr__(self):
         return f"for {self.cart} => {self.count} of {self.product}"
@@ -67,7 +76,8 @@ class Cart(BaseModel):
     )
     address = models.ForeignKey(
         to=Address,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
+        null=True,
     )
     customer = models.ForeignKey(
         to=Customer,
@@ -93,7 +103,7 @@ class Cart(BaseModel):
 
     @property
     def product_list(self):
-        return self.items.values_list('product', flat=True)
+        return list(self.items.values_list('product__name', flat=True))
 
     def raw_price_calc(self):
         prices = [x.final_price for x in self.items.all()]
@@ -101,8 +111,10 @@ class Cart(BaseModel):
         return self.raw_price
 
     def order_discount_calc(self):
-        self.order_discount = self.off_code.profit(self.raw_price)
-        return self.order_discount
+        if self.off_code:
+            self.order_discount = self.off_code.profit(self.raw_price)
+            return self.order_discount
+        return 0
 
     def final_prize_calc(self):
         final_prize = self.raw_price_calc() - self.order_discount_calc()

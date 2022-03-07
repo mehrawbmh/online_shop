@@ -96,6 +96,12 @@ class Discount(BaseDiscount):
         else:
             self.max_price = value
 
+    def delete(self, using=None, keep_parents=False):
+        super().delete(using, keep_parents)
+        for prod in self.product_set.all():
+            prod.discount = None
+            prod.save()
+
     def __repr__(self):
         return f"{self.type} Discount => {self.value}"
 
@@ -138,6 +144,12 @@ class OffCode(BaseDiscount):
                 self.is_active = True
             return True
         return False
+
+    def delete(self, using=None, keep_parents=False):
+        super().delete(using, keep_parents)
+        for cart in self.cart_set.all():
+            cart.off_code = None
+            cart.save()
 
     def profit(self, price):
         return super().profit(price) if self.min_buy_price < price else 0

@@ -15,6 +15,7 @@
         {% endif %}
     </div>
     <div class="card-body" style="text-align: center;">
-        <a href="#" class="card-link text-success">Add to cart<i class="fa fa-shopping-cart"></i></a>
+        <button id="click{{ product.id }}button" class="card-link btn btn-warning" onclick="AddToCard({{ product.id }})">Add to cart<i class="fa fa-shopping-cart"></i></button>
     </div>
 </div>
+
