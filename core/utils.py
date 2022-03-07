@@ -1,3 +1,6 @@
+from rest_framework.authentication import SessionAuthentication
+
+
 def phone_normalize(phone: str):
     """
     normalizes all kind of phone numbers (for Iran)
@@ -20,4 +23,12 @@ def phone_normalize(phone: str):
     return final_phone
 
 
+class CsrfExemptSessionAuthentication(SessionAuthentication):
 
+    def enforce_csrf(self, request):
+        """
+        To not perform the csrf check previously happening
+        :param request:
+        :return: None
+        """
+        return
