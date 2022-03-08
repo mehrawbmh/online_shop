@@ -4,9 +4,10 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from core.utils import CsrfExemptSessionAuthentication
+from products.models import Product
 from .models import CartItem, Cart
 from .serializers import CartItemSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -50,15 +51,47 @@ class CartItemDetailAPIView(RetrieveUpdateDestroyAPIView):
     def post(self, request, *args, **kwargs):
         user_items = self.get_queryset().order_by('-id')
         product_id = self.request.POST.get('product', None)
-        product_id = int(product_id)
         if product_id:
+            product_id = int(product_id)
+            product = get_object_or_404(Product.objects.filter(is_active=True).all(), id=product_id)
             for cart_item in user_items:
-                if cart_item.product.id == product_id:
+                if cart_item.product.id == product.id:
                     return Response({'cart_item_id': cart_item.id}, status=200)
             return Response({'404', 'cart item for user with this product not found'}, status=404)
         else:
-            return Response({'404': 'No such product with this id found'}, status=404)
+            return Response({'404': 'You have to send product id with key "product"'}, status=404)
 
     def delete(self, request, *args, **kwargs):
         print(kwargs)
         return super().delete(request, *args, **kwargs)
+
+
+class SetCookieForCartItem(APIView):
+
+    def post(self, request, *args, **kwargs):
+        prod_id = request.POST.get('product', None)
+        if prod_id:
+            prod = get_object_or_404(Product.objects.filter(is_active=True).all(), id=prod_id)
+            cookie_exist = self.check_cookie_exist(prod.id)
+            if cookie_exist:
+                resp = Response(status=201)
+                resp.set_cookie(f'prod{prod_id}', str(int(cookie_exist) + 1))
+                return resp
+            else:
+                resp = Response(status=201)
+                resp.set_cookie(f'prod{prod_id}', '1')
+                return resp
+        else:
+            return Response(status=404, data={'404': {'You have to pass "product" key in your request body'}})
+
+    def check_cookie_exist(self, product_id):
+        print(self.request.COOKIES.get(f'prod{product_id}'))
+        return self.request.COOKIES.get(f'prod{product_id}', None)
+
+    def delete(self, *args, **kwargs):
+        product_id = kwargs.get('pk')
+        cookie = self.request.COOKIES.get(f'prod{product_id}')
+        resp = Response(status=status.HTTP_204_NO_CONTENT)
+        if cookie:
+            resp.delete_cookie(f'prod{product_id}')
+        return resp

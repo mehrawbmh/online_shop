@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, DetailView
-
+from django.contrib.auth import login as auth_login
 from core.models import User
 from customers.forms import CustomerForm
 from customers.models import Customer
@@ -13,10 +13,16 @@ from django.forms import Form
 class CustomerLoginView(LoginView):
     template_name = 'registration/login.html'
 
+    def form_valid(self, form):
+        auth_login(self.request, form.get_user())
+        # TODO transfer cart item cookie info to database
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class CustomerSignUpView(FormView):
     template_name = 'registration/signup.html'
     form_class = CustomerForm
+
     # pro_id = 0
     # success_url = reverse_lazy('customer_profile', args={'pk':pro_id})
 
@@ -47,7 +53,7 @@ class CustomerSignUpView(FormView):
             national_code=form['national_code'].value(),
             user=related_user
         )
-        return redirect(reverse_lazy('customer_profile', kwargs={'pk':customer.id}))
+        return redirect(reverse_lazy('customer_profile', kwargs={'pk': customer.id}))
         # self.__class__.pro_id = customer.id
         # return super().form_valid(form)
 
