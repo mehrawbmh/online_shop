@@ -1,0 +1,83 @@
+{% extends 'layout/_base.html' %}
+{% load static %}
+{% block links %}
+    {{ block.super }}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% endblock %}
+
+{% block style %}
+    <style>
+    .media img{
+        max-height: 200px;
+        max-width: 200px;
+    }
+    .media-body{
+        align-items: center;
+        text-align: center;
+        margin:4px
+    }
+
+    table td, thead th{
+        text-align: center!important;
+        vertical-align: middle!important;
+    }
+    </style>
+{% endblock %}
+
+{% block main_body %}
+<div class="container-fluid">
+<div class="row justify-content-center align-items-center">
+<section class="cart_area section_padding">
+    <div class="container">
+    <div class="col">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Product photo</th>
+                    <th scope="col">title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart_item in items %}
+                <tr>
+                <td>
+                <div class="media">
+                <div class="d-flex">
+                    {% if cart_item.product.image %}
+                        <img src="{{ cart_item.product.image.url }}" alt="product"/>
+                    {% else %}
+                       <img src="{% static 'products/default.jpg' %}" alt="product"/>
+                    {% endif %}
+                </div>
+                </div>
+                </td>
+                <td>
+                <div class="media-body">
+                    <h4>{{ cart_item.product.name }}</h4>
+                </div>
+                </td>
+                <td>
+                <h5>{{ cart_item.product.final_price }}</h5>
+                </td>
+                <td>
+                    {{ cart_item.count }}
+                </td>
+                <td>
+                    <h5>{{ cart_item.final_price }}</h5>
+                </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    </div>
+</section>
+</div>
+</div>
+{% endblock %}
