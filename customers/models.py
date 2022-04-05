@@ -72,3 +72,10 @@ class Address(BaseModel):
 
     def __repr__(self):
         return f'Address {self.id} for {self.customer}'
+
+    def full_text(self):
+        text = self.province + ',' + self.city + ', region' + str(self.region)
+        text += ', street ' + self.main_street + ', ' + self.minor_street + ', alley ' + self.alley + ' number ' + str(self.number)
+        text += f', floor{self.house_floor}\n postal code: {self.postal_code}'
+        return text
+

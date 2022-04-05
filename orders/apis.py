@@ -24,7 +24,7 @@ class CartItemAPIView(ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         last_cart = self.request.user.customer.cart_set.last()
-        former_products = last_cart.items.values_list('product_id', flat=True)
+        former_products = last_cart.items.values_list('product_id', flat=True) if last_cart else []
         prod = serializer.validated_data['product']
         if prod.id in former_products:
             last_cart: Cart

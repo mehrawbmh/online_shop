@@ -72,4 +72,10 @@ class CustomerProfileView(DetailView):
     context_object_name = 'customer'
     template_name = 'customers/profile.html'
     queryset = Customer.objects.all()
-    # model = Customer
+    model = Customer
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.object: Customer
+        context['last_cart'] = self.object.cart_set.last()
+        return context
