@@ -31,7 +31,9 @@
                         function () {
                             $(`#click${product_id}button`).empty().append('remove').removeClass('btn-warning').addClass('btn-danger')
                         }
-                    )
+                    ).fail(function(req){
+                        console.log(req)
+                    })
                 } else {
                         $.post(
                             '{% url 'cart_item_detail_api' 0 %}',
@@ -91,6 +93,9 @@
 {% block style %}
 <style>
     .footer{
+        background-color: #A0E7E5;
+    }
+    body{
         background-color: #A0E7E5;
     }
 </style>

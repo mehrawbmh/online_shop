@@ -27,7 +27,9 @@ class CartItemAPIView(ListCreateAPIView):
         former_products = last_cart.items.values_list('product_id', flat=True)
         prod = serializer.validated_data['product']
         if prod.id in former_products:
-            return Response({'400': 'This product is already in your cart items. update it!'}, status=400)
+            last_cart: Cart
+            last_cart.items.get(product=prod).count += 1
+
         if last_cart and last_cart.status == 'unfinished':
             serializer.save(cart=last_cart)
         else:
