@@ -15,6 +15,7 @@ class CartView(View):
             data = {'cart': cart}
             if cart:
                 data['items'] = CartItem.objects.filter(cart=cart)
+                data['totalprize'] = cart.final_prize_calc()
             else:
                 data['items'] = None
         else:
@@ -28,7 +29,6 @@ class CartView(View):
                     product = Product.objects.get(id=prod_id)
                     items.append((product, value))
                     sum += int(product.final_price) * int(value)
-            print('sum:', sum)
             data['items'] = items
             data['totalprize'] = str(sum)
 

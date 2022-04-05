@@ -6,8 +6,8 @@ from rest_framework.views import APIView
 from core.utils import CsrfExemptSessionAuthentication
 from products.models import Product
 from .models import CartItem, Cart
-from .serializers import CartItemSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404
+from .serializers import CartItemSerializer, CartSerializer
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, RetrieveAPIView
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -28,9 +28,10 @@ class CartItemAPIView(ListCreateAPIView):
         prod = serializer.validated_data['product']
         if prod.id in former_products:
             last_cart: Cart
-            last_cart.items.get(product=prod).count += 1
-
-        if last_cart and last_cart.status == 'unfinished':
+            cart_item = last_cart.items.get(product=prod)
+            cart_item.count += 1
+            cart_item.save()
+        elif last_cart and last_cart.status == 'unfinished':
             serializer.save(cart=last_cart)
         else:
             cart = Cart.objects.create(
@@ -97,3 +98,8 @@ class SetCookieForCartItem(APIView):
         if cookie:
             resp.delete_cookie(f'prod{product_id}')
         return resp
+
+
+class CartDetailAPIView(RetrieveAPIView):
+    serializer_class = CartSerializer
+    queryset = Cart.objects.all()
