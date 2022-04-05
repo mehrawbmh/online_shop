@@ -17,9 +17,9 @@
         <li class="nav-item active">
             <a class="nav-link" href="{% url 'register_view' %}">Sign up</a>
         </li>
-        {% elif request.user.customer_set %}
+        {% elif not request.user.is_staff %}
             <li>
-            <a class="nav-link " href="{% url 'customer_profile'  request.user.id  %}"><i class="fa fa-user-tie"> Profile</i></a>
+            <a class="nav-link " href="{% url 'customer_profile'  request.user.customer.id  %}"><i class="fa fa-user-tie"> Profile</i></a>
             </li>
         {% else %}
             <li>

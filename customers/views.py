@@ -18,6 +18,13 @@ class CustomerLoginView(LoginView):
         # TODO transfer cart item cookie info to database
         return HttpResponseRedirect(self.get_success_url())
 
+    # def transfer_cookie_to_cart(self):
+    #     for key, value in self.request.COOKIES.items():
+    #         key: str
+    #         if key.startswith('prod'):
+    #             prod_id = int(key[4:])
+    #             product = Product.objects.get(id=prod_id)
+
 
 class CustomerSignUpView(FormView):
     template_name = 'registration/signup.html'
@@ -65,4 +72,10 @@ class CustomerProfileView(DetailView):
     context_object_name = 'customer'
     template_name = 'customers/profile.html'
     queryset = Customer.objects.all()
-    # model = Customer
+    model = Customer
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.object: Customer
+        context['last_cart'] = self.object.cart_set.last()
+        return context

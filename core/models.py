@@ -14,14 +14,14 @@ class BaseModel(models.Model):
     is_deleted = models.BooleanField(
         default=False,
         db_index=True,
-        db_column='deleted?',
+        db_column='deleted',
         editable=False,
         verbose_name=_('Delete_status')
     )
     is_active = models.BooleanField(
         default=True,
         db_index=True,
-        db_column='active?',
+        db_column='active',
         verbose_name=_('Active_status'),
         help_text="Use it when you want to temporarily not show some model to end user"
     )

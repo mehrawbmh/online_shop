@@ -234,4 +234,4 @@ class Product(BaseModel):
         return False
 
     def __repr__(self):
-        return f"Product {self.name} from brand {self.brand.name}"
+        return f"{self.name} from brand {self.brand.name}"
