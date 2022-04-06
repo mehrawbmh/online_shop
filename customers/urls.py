@@ -14,5 +14,6 @@ urlpatterns = [
             'get': 'list',
             'post': 'create',
             'delete': 'destroy'
-        }))
+        }
+    ))
 ]
