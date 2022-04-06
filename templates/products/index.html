@@ -39,19 +39,17 @@
                             '{% url 'cart_item_detail_api' 0 %}',
                             {'product': product_id},
                             function (data, status, xhr) {
-                                console.log('resid')
                                 let cart_item_id = data['cart_item_id']
                                 $.ajax(
                                     `basket_item_detail/${cart_item_id}`, {
                                         type: "DELETE",
                                         {#data:{'csrfmiddlewaretoken':'{{ csrf_token }}'},#}
-                                        {#headers:{ "X-CSRFToken": '{{csrf_token}}'},#}
+                                        headers:{ "X-CSRFToken": '{{csrf_token}}'},
                                         success: function (data) {
                                             $(`#click${product_id}button`).empty().append('Add to cart<i class="fa fa-shopping-cart"></i>').removeClass('btn-danger').addClass('btn-warning')
                                             console.log(data)
                                         }
-                                    }).fail(function () {
-                                    console.log('Didnt delete!')
+                                    }).fail(function (resp) {
                                 })
                             }
                         ).fail(function (data) {
@@ -66,21 +64,21 @@
                     function () {
                         $(`#click${product_id}button`).empty().append('remove').removeClass('btn-warning').addClass('btn-danger')
                     }
-                ).fail(function () {
-                    console.log("Cookie didn't set!")
+                ).fail(function (resp) {
+                    console.log(resp)
                 })
                 }
                 else{
                     $.ajax(
-                        `delete_cart_cookie/${product_id}/`, {
+                        '{% url 'delete_cookie_for_cart_item' '0' %}'.replace('0',product_id),{
                             type: "DELETE",
-                            {#data:{'csrfmiddlewaretoken':'{{ csrf_token }}'},#}
-                            {#headers:{ "X-CSRFToken": '{{csrf_token}}'},#}
+                            data:{'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                            headers:{ "X-CSRFToken": '{{csrf_token}}'},
                             success: function (data) {
                                 $(`#click${product_id}button`).empty().append('Add to cart<i class="fa fa-shopping-cart"></i>').removeClass('btn-danger').addClass('btn-warning')
                             },
-                            errors: function () {
-                                console.log('Cookie did not delete!')
+                            errors: function (resp) {
+                                console.log(resp)
                             }
                         })
                 }

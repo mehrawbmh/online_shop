@@ -60,8 +60,10 @@ class CartItemDetailAPIView(RetrieveUpdateDestroyAPIView):
             for cart_item in user_items:
                 if cart_item.product.id == product.id:
                     return Response({'cart_item_id': cart_item.id}, status=200)
+            print('ine?')
             return Response({'404', 'cart item for user with this product not found'}, status=404)
         else:
+            print('thisss')
             return Response({'404': 'You have to send product id with key "product"'}, status=404)
 
     def delete(self, request, *args, **kwargs):
