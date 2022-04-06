@@ -21,25 +21,28 @@ class CustomerLoginView(LoginView):
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
         try:
-            products_id_list = [(int(x[4:]), y) for x, y in self.request.COOKIES.items() if x.startswith('prod')]
+            products_id_dict = {int(x[4:]): y for (x, y) in self.request.COOKIES.items() if x.startswith('prod')}
+            if not products_id_dict:
+                return HttpResponseRedirect(self.get_success_url())
         except ValueError:
             return HttpResponseRedirect(self.get_success_url())
 
         last_cart: Cart = self.request.user.customer.cart_set.last()
         if last_cart and last_cart.status == 'unfinished':
-            ids = list(map(lambda my_tuple: int(my_tuple[0]), products_id_list))
+            ids = [int(x) for x in products_id_dict.keys()]
             for cartitem in last_cart.items.all():
-                if cartitem.product.id in ids:
-                    cartitem.count += abs(int(self.request.COOKIES.get(f'prod{cartitem.product.id}')))
+                this_id = cartitem.product.id
+                if this_id in ids:
+                    cartitem.count += abs(int(self.request.COOKIES.get(f'prod{this_id}')))
                     cartitem.save()
-            cart_item_objects = [CartItem(product_id=int(x), count=y, cart=last_cart) for x, y in products_id_list]
+                    del products_id_dict[this_id]
+            cart_item_objects = [CartItem(product_id=int(x), count=y, cart=last_cart) for x, y in
+                                 products_id_dict.items()]
             CartItem.objects.bulk_create(cart_item_objects)
         else:
             new_cart = Cart.objects.create(customer=self.request.user.customer)
-            cart_item_objects = [CartItem(product_id=int(x), count=y, cart=new_cart) for x, y in products_id_list]
+            cart_item_objects = [CartItem(product_id=int(x), count=y, cart=new_cart) for x, y in products_id_dict]
             CartItem.objects.bulk_create(cart_item_objects)
-            print('iin')
-        print(cart_item_objects, 'Anjam shod')
 
         return HttpResponseRedirect(self.get_success_url())
 
@@ -100,6 +103,8 @@ class CustomerProfileView(DetailView):
 
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated or kwargs['pk'] != self.request.user.customer.id:
+            print(self.request.user.customer.id)
+            print(kwargs)
             return HttpResponse(status=403)
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
