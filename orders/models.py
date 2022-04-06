@@ -130,3 +130,8 @@ class Cart(BaseModel):
             return f"Cart {self.id}({self.status}) for {self.customer}"
         except AttributeError:
             return f"Temporary Cart for {self.customer}"
+
+    def clean(self):
+        # IS it necessary?
+        self.final_prize_calc()
+        return super().clean()

@@ -20,20 +20,25 @@ class CustomerLoginView(LoginView):
 
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
-        # TODO transfer cart item cookie info to database
         try:
             products_id_list = [(int(x[4:]), y) for x, y in self.request.COOKIES.items() if x.startswith('prod')]
         except ValueError:
-            products_id_list = []
-        print(self.request.COOKIES)
+            return HttpResponseRedirect(self.get_success_url())
+
         last_cart: Cart = self.request.user.customer.cart_set.last()
         if last_cart and last_cart.status == 'unfinished':
+            ids = list(map(lambda my_tuple: int(my_tuple[0]), products_id_list))
+            for cartitem in last_cart.items.all():
+                if cartitem.product.id in ids:
+                    cartitem.count += abs(int(self.request.COOKIES.get(f'prod{cartitem.product.id}')))
+                    cartitem.save()
             cart_item_objects = [CartItem(product_id=int(x), count=y, cart=last_cart) for x, y in products_id_list]
             CartItem.objects.bulk_create(cart_item_objects)
         else:
             new_cart = Cart.objects.create(customer=self.request.user.customer)
             cart_item_objects = [CartItem(product_id=int(x), count=y, cart=new_cart) for x, y in products_id_list]
             CartItem.objects.bulk_create(cart_item_objects)
+            print('iin')
         print(cart_item_objects, 'Anjam shod')
 
         return HttpResponseRedirect(self.get_success_url())
