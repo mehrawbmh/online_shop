@@ -239,7 +239,7 @@ JAZZMIN_SETTINGS = {
 
     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
     "usermenu_links": [
-        {"model": "core.user"} 
+        {"model": "core.user"}
     ],
 
     #############
@@ -259,9 +259,9 @@ JAZZMIN_SETTINGS = {
     "hide_models": [],
 
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ["core", "customers", "books.author", "books.book"],
+    "order_with_respect_to": ["core", 'customers', "customers.Customers"],
 
-    # Custom links to append to app groups, keyed on app name
+# Custom links to append to app groups, keyed on app name
     "custom_links": {
         "books": [{
             "name": "Make Messages",
@@ -278,11 +278,11 @@ JAZZMIN_SETTINGS = {
         "core.user": "fas fa-user",
         "auth.Group": "fas fa-users",
         "customers.Customer": "fas fa-user",
-        "products.Product": "fa fa-product-hunt",
+        "products.Product": "fa fa-star",
         "products.Category": "fa fa-list",
-        "products.Brand":  "fas fa-chrome",
-        "products.discount": "fa fa-money-bill",
-        "products.off_code": "fa fa-money-bill-alt",
+        "products.Brand": "fa fa-star-of-david",
+        "products.discount": "fa fa-star",
+        "products.off_code": "fa fa-star",
         "orders.Cart": "fa fa-shopping-cart",
         "orders.CartItem": "fa fa-shopping-bag",
         "customers.Address": "fa fa-address-card"
