@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-07 08:28+0000\n"
-"PO-Revision-Date: 2022-04-07 08:15+0000\n"
+"POT-Creation-Date: 2022-04-07 12:37+0000\n"
+"PO-Revision-Date: 2022-04-07 12:38+0000\n"
 "Last-Translator: Mehrab MHosseini <mehrabmh@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -127,7 +127,7 @@ msgstr "نام دسته"
 msgid "Category parent"
 msgstr "دسته بندی والد"
 
-#: products/models.py:59
+#: products/models.py:59 templates/products/product_detail.html:36
 msgid "Brand"
 msgstr "برند"
 
@@ -190,59 +190,110 @@ msgid "Product Properties"
 msgstr "ویژگی های محصول"
 
 #: products/models.py:220
-#, fuzzy
-#| msgid "Product"
 msgid "Product image"
-msgstr "محصولات"
+msgstr "تصویر محصول"
 
 #: templates/admin/base.html:95
 msgid "Search"
-msgstr ""
+msgstr "جستجو"
 
 #: templates/admin/base.html:155
 msgid "Account"
-msgstr ""
+msgstr "حساب"
 
 #: templates/admin/base.html:158
 msgid "Change password"
-msgstr ""
+msgstr "تغییر رمز"
 
 #: templates/admin/base.html:162
 msgid "Log out"
-msgstr ""
+msgstr "خروج"
 
 #: templates/admin/base.html:173
 msgid "See Profile"
-msgstr ""
+msgstr "مشاهده پروفایل"
 
 #: templates/admin/base.html:213
 msgid "Dashboard"
-msgstr ""
+msgstr "داشبورد"
 
 #: templates/admin/base.html:326
 msgid "Jazzmin version"
-msgstr ""
+msgstr "Jazzmin version"
 
 #: templates/admin/base.html:329
 msgid "Copyright"
-msgstr ""
+msgstr "کپی رایت"
 
 #: templates/admin/base.html:329
 msgid "All rights reserved."
-msgstr ""
+msgstr "همه حقوق محفوظ است"
 
 #: templates/admin/base.html:345
 msgid "UI Configuration"
-msgstr ""
+msgstr "کانفیگ کردن دیدگاه کاربری"
 
 #: templates/admin/base.html:349
 msgid "Copy this info your settings file to persist these UI changes"
-msgstr ""
+msgstr "برای تایید کد بالا را در تنظیمات کپی کنید"
 
 #: templates/admin/base.html:353
 msgid "Close"
-msgstr ""
+msgstr "بستن"
 
 #: templates/layout/navigation_bar.html:20
 msgid "log in"
 msgstr "ورود"
+
+#: templates/orders/basket.html:43
+#, fuzzy
+#| msgid "Product"
+msgid "Product photo"
+msgstr "محصول"
+
+#: templates/orders/basket.html:44
+#, fuzzy
+#| msgid "Title"
+msgid "title"
+msgstr "عنوان"
+
+#: templates/orders/basket.html:45
+msgid "Price"
+msgstr "قیمت"
+
+#: templates/orders/basket.html:46
+msgid "Quantity"
+msgstr "تعداد"
+
+#: templates/orders/basket.html:48
+msgid "Total"
+msgstr "مجموع"
+
+#: templates/orders/basket.html:116
+#, fuzzy
+#| msgid "Product price"
+msgid "Total price:"
+msgstr "قیمت محصول"
+
+#: templates/orders/basket.html:120
+msgid "Tooman"
+msgstr "تومان"
+
+#: templates/products/product_card.html:20
+msgid "Add to cart"
+msgstr "اضافه کردن به سبد خرید"
+
+#: templates/products/product_detail.html:25
+#: templates/products/product_detail.html:31
+msgid "price:"
+msgstr "قیمت:"
+
+#: templates/products/product_detail.html:41
+msgid "More info:"
+msgstr "اطلاعات بیشتر:"
+
+#: templates/products/product_detail.html:47
+#, fuzzy
+#| msgid "Product Properties"
+msgid "Properties:"
+msgstr "ویژگی های محصول"

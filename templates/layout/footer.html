@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <div class="footer">
     <div class="container">
         <hr>
@@ -9,10 +10,10 @@
             <div class="foot-col footer-col-first col-2">
                 <h3>Know us better</h3>
                 <ul>
-                    <li><a href="#" class="text-secondary">Rules</a></li>
-                    <li><a href="#" class="text-secondary">Cooperation</a></li>
-                    <li><a href="#" class="text-secondary">about us</a></li>
-                    <li> <a href="#" class="text-secondary">methods</a></li>
+                    <li><a href="#" class="text-secondary">{% trans 'Rules' %}</a></li>
+                    <li><a href="#" class="text-secondary">{% trans 'Cooperation' %}</a></li>
+                    <li><a href="{% url 'contact-us' %}" class="text-secondary">{% trans 'contact us' %}</a></li>
+                    <li> <a href="#" class="text-secondary">{% trans 'about us' %}</a></li>
                 </ul>
             </div>
             <div class="foot-col footer-col-third col-4">

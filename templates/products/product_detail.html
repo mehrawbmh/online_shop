@@ -1,5 +1,6 @@
 {% extends 'layout/_base.html' %}
 {% load static %}
+{% load i18n %}
 {% block links %}
     {{ block.super }}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
@@ -21,29 +22,29 @@
                 <div class="prod-dtl">
                     {% if product.discount %}
                     <div class="LineDiv">
-                        <h4>Price:</h4>
+                        <h4>{% trans 'price:'%}</h4>
                         <p class="before-off-price">{{ product.price }}</p>
                         <p class="after-off-price">{{ product.final_price }} Tooman</p>
                     </div>
                     {% else %}
                     <div class="LineDiv">
-                        <h4>Price:</h4>
+                        <h4>{% trans 'price:' %}</h4>
                         <p>{{ product.price }} Tooman</p>
                     </div>
                     {% endif %}
                     <div class="LineDiv">
-                        <h4>Brand:</h4>
+                        <h4>{% trans 'Brand' %}</h4>
                         <p title="{{ product.brand.bio }}" class="badge badge-danger">{{ product.brand.name }}</p>
                     </div>
                     {% if product.description %}
                         <div class="LineDiv">
-                            <h4>More info:</h4>
+                            <h4>{% trans 'More info:' %}</h4>
                             <p class="text-secondary">{{ product.description }}</p>
                         </div>
                     {% endif %}
                     {% if product.properties %}
                         <div class="">
-                            <h4>Properties:</h4>
+                            <h4>{% trans 'Properties:' %}</h4>
                         <div style="padding-left: 40px">
                             {% for key,value in product.properties.items %}
                                 <h5>{{ key }}:{{ value }}</h5>

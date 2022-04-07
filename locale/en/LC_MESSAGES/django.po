@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-07 08:28+0000\n"
+"POT-Creation-Date: 2022-04-07 12:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,7 +126,7 @@ msgstr ""
 msgid "Category parent"
 msgstr ""
 
-#: products/models.py:59
+#: products/models.py:59 templates/products/product_detail.html:36
 msgid "Brand"
 msgstr ""
 
@@ -240,4 +240,49 @@ msgstr ""
 
 #: templates/layout/navigation_bar.html:20
 msgid "log in"
+msgstr ""
+
+#: templates/orders/basket.html:43
+msgid "Product photo"
+msgstr ""
+
+#: templates/orders/basket.html:44
+msgid "title"
+msgstr ""
+
+#: templates/orders/basket.html:45
+msgid "Price"
+msgstr ""
+
+#: templates/orders/basket.html:46
+msgid "Quantity"
+msgstr ""
+
+#: templates/orders/basket.html:48
+msgid "Total"
+msgstr ""
+
+#: templates/orders/basket.html:116
+msgid "Total price:"
+msgstr ""
+
+#: templates/orders/basket.html:120
+msgid "Tooman"
+msgstr ""
+
+#: templates/products/product_card.html:20
+msgid "Add to cart"
+msgstr ""
+
+#: templates/products/product_detail.html:25
+#: templates/products/product_detail.html:31
+msgid "price:"
+msgstr ""
+
+#: templates/products/product_detail.html:41
+msgid "More info:"
+msgstr ""
+
+#: templates/products/product_detail.html:47
+msgid "Properties:"
 msgstr ""

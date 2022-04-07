@@ -1,5 +1,6 @@
 {% extends 'layout/_base.html' %}
 {% load static %}
+{% load i18n %}
 {% block links %}
     {{ block.super }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -39,12 +40,12 @@
                             <table class="table-responsive">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Product photo</th>
-                                    <th scope="col">title</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
+                                    <th scope="col">{% trans 'Product photo' %}</th>
+                                    <th scope="col">{% trans 'title' %}</th>
+                                    <th scope="col">{% trans 'Price' %}</th>
+                                    <th scope="col">{% trans 'Quantity' %}</th>
                                     {% if cart %}
-                                    <th scope="col">Total</th>
+                                    <th scope="col">{% trans 'Total' %}</th>
                                     {% endif %}
                                 </tr>
                                 </thead>
@@ -112,11 +113,11 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <h3 class="text-primary">Total price:</h3>
+                                        <h3 class="text-primary">{% trans 'Total price:' %}</h3>
                                     </td>
                                     <td></td>
                                     <td>
-                                        <h3 class="text-primary">{{ totalprize }} Tooman </h3>
+                                        <h3 class="text-primary">{{ totalprize }} {% trans 'Tooman' %} </h3>
                                     </td>
                                 </tr>
                                 </tbody>
