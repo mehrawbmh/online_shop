@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-ep^cd*djy3=1karmd!)*!0*ev)@3j!#mt(s!ty=7ldk%h9!)y6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -112,7 +112,7 @@ LANGUAGE_CODE = 'en'
 LANGUAGES = (('en', 'English'), ('fa', 'Farsi'))
 LOCALE_PATHS = (BASE_DIR / 'locale',)
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -121,9 +121,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static', ]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles/"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -261,7 +261,7 @@ JAZZMIN_SETTINGS = {
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
     "order_with_respect_to": ["core", 'customers', "customers.Customers"],
 
-# Custom links to append to app groups, keyed on app name
+    # Custom links to append to app groups, keyed on app name
     "custom_links": {
         "books": [{
             "name": "Make Messages",
@@ -353,3 +353,5 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-outline-success"
     }
 }
+
+CSRF_TRUSTED_ORIGINS = ['https://mehrab-mh-minimal.fandogh.cloud',]
