@@ -1,5 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, DetailView
@@ -9,21 +12,42 @@ from customers.forms import CustomerForm
 from customers.models import Customer
 from django.forms import Form
 
+from orders.models import CartItem, Cart
+
 
 class CustomerLoginView(LoginView):
     template_name = 'registration/login.html'
 
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
-        # TODO transfer cart item cookie info to database
-        return HttpResponseRedirect(self.get_success_url())
+        resp = HttpResponseRedirect(self.get_success_url())
+        try:
+            products_id_dict = {int(x[4:]): y for (x, y) in self.request.COOKIES.items() if x.startswith('prod')}
+            if not products_id_dict:
+                return resp
+        except ValueError:
+            return resp
 
-    # def transfer_cookie_to_cart(self):
-    #     for key, value in self.request.COOKIES.items():
-    #         key: str
-    #         if key.startswith('prod'):
-    #             prod_id = int(key[4:])
-    #             product = Product.objects.get(id=prod_id)
+        last_cart: Cart = self.request.user.customer.cart_set.last()
+        if last_cart and last_cart.status == 'unfinished':
+            ids = [int(x) for x in products_id_dict.keys()]
+            for cartitem in last_cart.items.all():
+                this_id = cartitem.product.id
+                if this_id in ids:
+                    cartitem.count += abs(int(self.request.COOKIES.get(f'prod{this_id}')))
+                    cartitem.save()
+                    del products_id_dict[this_id]
+            cart_item_objects = [CartItem(product_id=int(x), count=y, cart=last_cart) for x, y in
+                                 products_id_dict.items()]
+            CartItem.objects.bulk_create(cart_item_objects)
+        else:
+            new_cart = Cart.objects.create(customer=self.request.user.customer)
+            cart_item_objects = [CartItem(product_id=int(x), count=y, cart=new_cart) for x, y in products_id_dict.items()]
+            CartItem.objects.bulk_create(cart_item_objects)
+        for key in self.request.COOKIES.keys():
+            if key.startswith('prod'):
+                resp.delete_cookie(key)
+        return resp
 
 
 class CustomerSignUpView(FormView):
@@ -79,3 +103,12 @@ class CustomerProfileView(DetailView):
         self.object: Customer
         context['last_cart'] = self.object.cart_set.last()
         return context
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated or kwargs['pk'] != self.request.user.customer.id:
+            print(self.request.user.customer.id)
+            print(kwargs)
+            return HttpResponse(status=403)
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)

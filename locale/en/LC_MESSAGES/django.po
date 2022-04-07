@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-22 11:48+0000\n"
+"POT-Creation-Date: 2022-04-07 13:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,35 +18,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: core/models.py:16
+#: core/admin.py:21
+msgid "User_info"
+msgstr ""
+
+#: core/admin.py:22
+msgid "User_permissions"
+msgstr ""
+
+#: core/admin.py:26
+msgid "Personal info"
+msgstr ""
+
+#: core/admin.py:27
+msgid "Permissions"
+msgstr ""
+
+#: core/admin.py:30
+msgid "Important dates"
+msgstr ""
+
+#: core/models.py:19
 msgid "Delete_status"
 msgstr ""
 
-#: core/models.py:22
+#: core/models.py:25
 msgid "Active_status"
 msgstr ""
 
-#: core/models.py:27
+#: core/models.py:30
 msgid "Create time"
 msgstr ""
 
-#: core/models.py:31
+#: core/models.py:34
 msgid "Last update"
 msgstr ""
 
-#: core/models.py:72
+#: core/models.py:74
 msgid "User"
 msgstr ""
 
-#: core/models.py:95
+#: core/models.py:116
 msgid "Discount value"
 msgstr ""
 
-#: core/models.py:100
+#: core/models.py:121
 msgid "Maximum Price"
 msgstr ""
 
-#: core/models.py:105
+#: core/models.py:126
 msgid "Expire time"
 msgstr ""
 
@@ -54,116 +74,243 @@ msgstr ""
 msgid "Customer"
 msgstr ""
 
-#: customers/models.py:20
+#: customers/models.py:36
 msgid "Address"
 msgstr ""
 
-#: customers/models.py:21
+#: customers/models.py:37
 msgid "Addresses"
 msgstr ""
 
-#: orders/models.py:10
+#: orders/models.py:11
 msgid "Basket item"
 msgstr ""
 
-#: orders/models.py:15 products/models.py:119
+#: orders/models.py:16 products/models.py:171
 msgid "Product"
 msgstr ""
 
-#: orders/models.py:18
+#: orders/models.py:19
 msgid "Number of product"
 msgstr ""
 
-#: orders/models.py:24 orders/models.py:46
+#: orders/models.py:26 orders/models.py:58
 msgid "Basket"
 msgstr ""
 
-#: orders/models.py:47
+#: orders/models.py:59
 msgid "Baskets"
 msgstr ""
 
-#: orders/models.py:57
+#: orders/models.py:68
 msgid "OffCode"
 msgstr ""
 
-#: orders/models.py:62
+#: orders/models.py:73
 msgid "Basket Status"
 msgstr ""
 
-#: products/models.py:10
+#: products/models.py:11
 msgid "Categories"
 msgstr ""
 
-#: products/models.py:11 products/models.py:139
+#: products/models.py:12 products/models.py:192
 msgid "Category"
 msgstr ""
 
-#: products/models.py:17
+#: products/models.py:18
 msgid "Category Name"
 msgstr ""
 
-#: products/models.py:26
+#: products/models.py:27
 msgid "Category parent"
 msgstr ""
 
-#: products/models.py:37
+#: products/models.py:59 templates/products/product_detail.html:36
 msgid "Brand"
 msgstr ""
 
-#: products/models.py:43
+#: products/models.py:65
 msgid "Brand name"
 msgstr ""
 
-#: products/models.py:47
+#: products/models.py:69
 msgid "Satisfaction rating"
 msgstr ""
 
-#: products/models.py:54
+#: products/models.py:77
 msgid "Brand description"
 msgstr ""
 
-#: products/models.py:63 products/models.py:147
+#: products/models.py:86 products/models.py:200
 msgid "Discount"
 msgstr ""
 
-#: products/models.py:82
+#: products/models.py:120
 msgid "Off Code"
 msgstr ""
 
-#: products/models.py:86
+#: products/models.py:124
 msgid "Unique token"
 msgstr ""
 
-#: products/models.py:93
+#: products/models.py:131
 msgid "Title"
 msgstr ""
 
-#: products/models.py:97
+#: products/models.py:135
 msgid "Minimum buy amount"
 msgstr ""
 
-#: products/models.py:120
-#, fuzzy
-#| msgid "Product"
+#: products/models.py:172
 msgid "Products"
 msgstr ""
 
-#: products/models.py:126
+#: products/models.py:178
 msgid "Product name"
 msgstr ""
 
-#: products/models.py:130
+#: products/models.py:182
 msgid "Product price"
 msgstr ""
 
-#: products/models.py:150
+#: products/models.py:203
 msgid "Available number in store"
 msgstr ""
 
-#: products/models.py:156
+#: products/models.py:211
 msgid "Description"
 msgstr ""
 
-#: products/models.py:160
+#: products/models.py:214
 msgid "Product Properties"
+msgstr ""
+
+#: products/models.py:220
+msgid "Product image"
+msgstr ""
+
+#: templates/admin/base.html:95
+msgid "Search"
+msgstr ""
+
+#: templates/admin/base.html:155
+msgid "Account"
+msgstr ""
+
+#: templates/admin/base.html:158
+msgid "Change password"
+msgstr ""
+
+#: templates/admin/base.html:162
+msgid "Log out"
+msgstr ""
+
+#: templates/admin/base.html:173
+msgid "See Profile"
+msgstr ""
+
+#: templates/admin/base.html:213
+msgid "Dashboard"
+msgstr ""
+
+#: templates/admin/base.html:326
+msgid "Jazzmin version"
+msgstr ""
+
+#: templates/admin/base.html:329
+msgid "Copyright"
+msgstr ""
+
+#: templates/admin/base.html:329
+msgid "All rights reserved."
+msgstr ""
+
+#: templates/admin/base.html:345
+msgid "UI Configuration"
+msgstr ""
+
+#: templates/admin/base.html:349
+msgid "Copy this info your settings file to persist these UI changes"
+msgstr ""
+
+#: templates/admin/base.html:353
+msgid "Close"
+msgstr ""
+
+#: templates/layout/footer.html:11
+msgid "Know us better"
+msgstr ""
+
+#: templates/layout/footer.html:13
+msgid "Rules"
+msgstr ""
+
+#: templates/layout/footer.html:14
+msgid "Cooperation"
+msgstr ""
+
+#: templates/layout/footer.html:15
+msgid "contact us"
+msgstr ""
+
+#: templates/layout/footer.html:16
+msgid "about us"
+msgstr ""
+
+#: templates/layout/footer.html:20
+msgid "Address and more info"
+msgstr ""
+
+#: templates/layout/footer.html:24
+msgid "Contact us"
+msgstr ""
+
+#: templates/layout/navigation_bar.html:20
+msgid "log in"
+msgstr ""
+
+#: templates/orders/basket.html:43
+msgid "Product photo"
+msgstr ""
+
+#: templates/orders/basket.html:44
+msgid "title"
+msgstr ""
+
+#: templates/orders/basket.html:45
+msgid "Price"
+msgstr ""
+
+#: templates/orders/basket.html:46
+msgid "Quantity"
+msgstr ""
+
+#: templates/orders/basket.html:48
+msgid "Total"
+msgstr ""
+
+#: templates/orders/basket.html:116
+msgid "Total price:"
+msgstr ""
+
+#: templates/orders/basket.html:120
+msgid "Tooman"
+msgstr ""
+
+#: templates/products/product_card.html:20
+msgid "Add to cart"
+msgstr ""
+
+#: templates/products/product_detail.html:25
+#: templates/products/product_detail.html:31
+msgid "price:"
+msgstr ""
+
+#: templates/products/product_detail.html:41
+msgid "More info:"
+msgstr ""
+
+#: templates/products/product_detail.html:47
+msgid "Properties:"
 msgstr ""

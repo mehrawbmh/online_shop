@@ -1,10 +1,13 @@
 {% extends 'layout/_base.html' %}
+{% load i18n %}
+{% get_current_language as CURRENT_LANG %}
 {% block links %}
     {{ block.super }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 {% endblock %}
+
 {% block main_body %}
     <div class="container-fluid" style="background-color: #A0E7E5;">
         <div class="row justify-content-center">
@@ -39,19 +42,17 @@
                             '{% url 'cart_item_detail_api' 0 %}',
                             {'product': product_id},
                             function (data, status, xhr) {
-                                console.log('resid')
                                 let cart_item_id = data['cart_item_id']
                                 $.ajax(
                                     `basket_item_detail/${cart_item_id}`, {
                                         type: "DELETE",
                                         {#data:{'csrfmiddlewaretoken':'{{ csrf_token }}'},#}
-                                        {#headers:{ "X-CSRFToken": '{{csrf_token}}'},#}
+                                        headers:{ "X-CSRFToken": '{{csrf_token}}'},
                                         success: function (data) {
                                             $(`#click${product_id}button`).empty().append('Add to cart<i class="fa fa-shopping-cart"></i>').removeClass('btn-danger').addClass('btn-warning')
                                             console.log(data)
                                         }
-                                    }).fail(function () {
-                                    console.log('Didnt delete!')
+                                    }).fail(function (resp) {
                                 })
                             }
                         ).fail(function (data) {
@@ -66,21 +67,21 @@
                     function () {
                         $(`#click${product_id}button`).empty().append('remove').removeClass('btn-warning').addClass('btn-danger')
                     }
-                ).fail(function () {
-                    console.log("Cookie didn't set!")
+                ).fail(function (resp) {
+                    console.log(resp)
                 })
                 }
                 else{
                     $.ajax(
-                        `delete_cart_cookie/${product_id}/`, {
+                        '{% url 'delete_cookie_for_cart_item' '0' %}'.replace('0',product_id),{
                             type: "DELETE",
-                            {#data:{'csrfmiddlewaretoken':'{{ csrf_token }}'},#}
-                            {#headers:{ "X-CSRFToken": '{{csrf_token}}'},#}
+                            data:{'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                            headers:{ "X-CSRFToken": '{{csrf_token}}'},
                             success: function (data) {
                                 $(`#click${product_id}button`).empty().append('Add to cart<i class="fa fa-shopping-cart"></i>').removeClass('btn-danger').addClass('btn-warning')
                             },
-                            errors: function () {
-                                console.log('Cookie did not delete!')
+                            errors: function (resp) {
+                                console.log(resp)
                             }
                         })
                 }

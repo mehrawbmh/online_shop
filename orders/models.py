@@ -19,7 +19,7 @@ class CartItem(BaseModel):
         verbose_name=_("Number of product"),
         default=1,
         validators=[check_positive_not_zero]
-    )  # TODO: check available number
+    )
     cart = models.ForeignKey(
         'Cart',
         on_delete=models.CASCADE,
@@ -58,7 +58,6 @@ class Cart(BaseModel):
         verbose_name = _("Basket")
         verbose_name_plural = _("Baskets")
 
-    #     # TODO: implement a random id generator function for default of this field
     #     unique_id = models.IntegerField(unique=True, primary_key=True, verbose_name=_("Unique id"))
     #     delivery_time = models.DurationField(null=True, default=timedelta(days=1), blank=True,verbose_name=_("Will delivery at"))
     off_code = models.ForeignKey(
@@ -130,3 +129,8 @@ class Cart(BaseModel):
             return f"Cart {self.id}({self.status}) for {self.customer}"
         except AttributeError:
             return f"Temporary Cart for {self.customer}"
+
+    def clean(self):
+        # IS it necessary?
+        self.final_prize_calc()
+        return super().clean()

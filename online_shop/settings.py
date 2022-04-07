@@ -27,12 +27,13 @@ SECRET_KEY = 'django-insecure-ep^cd*djy3=1karmd!)*!0*ev)@3j!#mt(s!ty=7ldk%h9!)y6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
     'jazzmin',
+    'rosetta',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -107,11 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 LANGUAGES = (('en', 'English'), ('fa', 'Farsi'))
 LOCALE_PATHS = (BASE_DIR / 'locale',)
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -120,9 +121,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static', ]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles/"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -133,6 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.User'
 LOGIN_URL = 'login/'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 LOGGING = {
     'version': 1,
@@ -237,7 +239,7 @@ JAZZMIN_SETTINGS = {
 
     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
     "usermenu_links": [
-        {"model": "core.user"}  # TODO check it
+        {"model": "core.user"}
     ],
 
     #############
@@ -257,7 +259,7 @@ JAZZMIN_SETTINGS = {
     "hide_models": [],
 
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ["core", "customers", "books.author", "books.book"],
+    "order_with_respect_to": ["core", 'customers', "customers.Customers"],
 
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
@@ -276,11 +278,11 @@ JAZZMIN_SETTINGS = {
         "core.user": "fas fa-user",
         "auth.Group": "fas fa-users",
         "customers.Customer": "fas fa-user",
-        "products.Product": "fa fa-product-hunt",
+        "products.Product": "fa fa-star",
         "products.Category": "fa fa-list",
-        "products.Brand":  "fas fa-chrome",
-        "products.discount": "fa fa-money-bill",
-        "products.off_code": "fa fa-money-bill-alt",
+        "products.Brand": "fa fa-star-of-david",
+        "products.discount": "fa fa-star",
+        "products.off_code": "fa fa-star",
         "orders.Cart": "fa fa-shopping-cart",
         "orders.CartItem": "fa fa-shopping-bag",
         "customers.Address": "fa fa-address-card"
@@ -351,3 +353,5 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-outline-success"
     }
 }
+
+CSRF_TRUSTED_ORIGINS = ['https://mehrab-mh-minimal.fandogh.cloud',]

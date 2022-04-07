@@ -13,7 +13,7 @@ class BaseManager(models.Manager):
     def full_archive(self):
         return super().get_queryset()
 
-    def get_active(self):  # TODO : just show active products on site not all!
+    def get_active(self):
         return self.get_queryset().filter(is_active=True)
 
 

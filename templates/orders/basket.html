@@ -1,5 +1,6 @@
 {% extends 'layout/_base.html' %}
 {% load static %}
+{% load i18n %}
 {% block links %}
     {{ block.super }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -9,8 +10,8 @@
 {% block style %}
     <style>
         .media img {
-            max-height: 200px;
-            max-width: 200px;
+            max-height: 100px;
+            max-width: 100px;
         }
 
         .media-body {
@@ -23,6 +24,9 @@
             text-align: center !important;
             vertical-align: middle !important;
         }
+        td input{
+            width: 50px;
+        }
     </style>
 {% endblock %}
 
@@ -32,16 +36,16 @@
             <section class="cart_area section_padding">
                 <div class="container">
                     <div class="col">
-                        <div class="table-responsive">
-                            <table class="table">
+                        <div class="table">
+                            <table class="table-responsive">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Product photo</th>
-                                    <th scope="col">title</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
+                                    <th scope="col">{% trans 'Product photo' %}</th>
+                                    <th scope="col">{% trans 'title' %}</th>
+                                    <th scope="col">{% trans 'Price' %}</th>
+                                    <th scope="col">{% trans 'Quantity' %}</th>
                                     {% if cart %}
-                                    <th scope="col">Total</th>
+                                    <th scope="col">{% trans 'Total' %}</th>
                                     {% endif %}
                                 </tr>
                                 </thead>
@@ -69,7 +73,7 @@
                                                 <h5>{{ cart_item.product.final_price }}</h5>
                                             </td>
                                             <td>
-                                                {{ cart_item.count }}
+                                                <input type="number" value="{{ cart_item.count }}" onchange="change_count_database(this, {{ cart_item.id }})">
                                             </td>
                                             <td>
                                                 <h5 class="text-secondary">{{ cart_item.final_price }}</h5>
@@ -99,29 +103,78 @@
                                                 <h5>{{ product.final_price }}</h5>
                                             </td>
                                             <td>
-                                                {{ count }}
+                                                <input type="number" value="{{ count }}" onchange='change_count_cookie(this, {{ product.id }})'>
                                             </td>
 
                                         </tr>
                                     {% endfor %}
                                 {% endif %}
-
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <h3 class="text-primary">Total price:</h3>
+                                        <h3 class="text-primary">{% trans 'Total price:' %}</h3>
                                     </td>
                                     <td></td>
                                     <td>
-                                        <h3 class="text-primary">{{ totalprize }}</h3>
+                                        <h3 class="text-primary">{{ totalprize }} {% trans 'Tooman' %} </h3>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
+                    {% if valid != 2 %}
+                    <form method="post" action="{% url 'check_off_code' %}">
+                        {% csrf_token %}
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                {#<h5>Any offcode?</h5>#}
+                                <label class="p-2" for="offCode">Any off code?</label>
+                                <input type="text" placeholder="your code..." id="offCode" name="offcode">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary h-25 mb-1">Submit</button>
+                                {% if valid == 0 %} <h6>Your code didn't work!</h6> {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                    {% else %}
+                        <p class="text-success">You've applied your off code!</p>
+                        <p class="text-success">profit: {{ profit }} Tooman</p>
+                    {% endif %}
+                    <div class="justify-content-center">
+                        <a href="{% url 'check_off_code' %}?cartid={{ cart.id }}" class="btn btn-info">Click here to finalize your Order</a>
+                    </div>
                     </div>
                 </div>
             </section>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+<script>
+    function setCookie(cName, cValue, expDays=60) {
+        let date = new Date();
+        date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+    }
+    function change_count_cookie(input, prod_id){
+        input.value = Math.abs(input.value)
+        setCookie('prod'.concat(prod_id),input.value)
+        document.location.reload()
+    }
+    function change_count_database(input, cartitem_id){
+        input.value = Math.abs(input.value)
+        $.post(
+            "{% url 'cartitem_change_count' %}",
+            {'csrfmiddlewaretoken': '{{ csrf_token }}', 'cartitem_id': cartitem_id, 'new_value':Math.abs(input.value)},
+            function () {
+                document.location.reload()
+            }
+        ).fail(function (){
+            console.log('something went wrong!')
+        })
+    }
+</script>
 {% endblock %}

@@ -8,7 +8,7 @@ from products.models import Product
 from .models import CartItem, Cart
 from .serializers import CartItemSerializer, CartSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, RetrieveAPIView
-from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -43,6 +43,23 @@ class CartItemAPIView(ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
+class CartItemCountChange(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            cart_item = CartItem.objects.get(id=int(self.request.POST.get('cartitem_id')))
+        except:
+            return Response(status=400)
+        if self.request.user.customer == cart_item.cart.customer:
+            cart_item.count = int(self.request.POST.get('new_value'))
+            cart_item.save()
+            return Response(status=200)
+        else:
+            return Response(status=403)
+
+
 class CartItemDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = CartItemSerializer
     permission_classes = [IsAuthenticated]
@@ -60,8 +77,10 @@ class CartItemDetailAPIView(RetrieveUpdateDestroyAPIView):
             for cart_item in user_items:
                 if cart_item.product.id == product.id:
                     return Response({'cart_item_id': cart_item.id}, status=200)
+            print('ine?')
             return Response({'404', 'cart item for user with this product not found'}, status=404)
         else:
+            print('thisss')
             return Response({'404': 'You have to send product id with key "product"'}, status=404)
 
     def delete(self, request, *args, **kwargs):

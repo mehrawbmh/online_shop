@@ -41,3 +41,4 @@ class CustomerForm(ModelForm):
                 'password_confirm',
                 ValidationError("Password confirmation doesn't match with password")
             )
+        return cleaned_data

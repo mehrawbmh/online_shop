@@ -52,7 +52,6 @@ class BaseModel(models.Model):
     def restore(self):
         self.is_deleted = False
         self.save()
-        # TODO: log when some object restored
 
     def deactivate(self):
         self.is_active = False

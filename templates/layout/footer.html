@@ -1,26 +1,27 @@
 {% load static %}
+{% load i18n %}
 <div class="footer">
     <div class="container">
         <hr>
         <div class="row">
             <div class="foot-col footer-col-second col-2">
-                <img src="{% static 'layout/logo2.jpg' %}" alt="logo" class="d-none d-lg-block">
+                <img src="{% static 'layout/shop_logo.jpg' %}" alt="logo" class="d-none d-lg-block">
             </div>
             <div class="foot-col footer-col-first col-2">
-                <h3>Know us better</h3>
+                <h3>{% trans 'Know us better' %}</h3>
                 <ul>
-                    <li><a href="#" class="text-secondary">Rules</a></li>
-                    <li><a href="#" class="text-secondary">Cooperation</a></li>
-                    <li><a href="#" class="text-secondary">about us</a></li>
-                    <li> <a href="#" class="text-secondary">methods</a></li>
+                    <li><a href="#" class="text-secondary">{% trans 'Rules' %}</a></li>
+                    <li><a href="#" class="text-secondary">{% trans 'Cooperation' %}</a></li>
+                    <li><a href="{% url 'contact-us' %}" class="text-secondary">{% trans 'contact us' %}</a></li>
+                    <li> <a href="#" class="text-secondary">{% trans 'about us' %}</a></li>
                 </ul>
             </div>
             <div class="foot-col footer-col-third col-4">
-                <h3>Address and more info</h3>
+                <h3>{% trans 'Address and more info' %}</h3>
                 <p>Tehran, Azadi street, near to Enghelab square, 297 west. Apartment 25, second floor</p>
             </div>
             <div class="foot-col footer-col-fourth col-4">
-                <h3>Contact us</h3>
+                <h3>{% trans 'Contact us' %}</h3>
                 <ul>
                     <li><i class="fa fa-twitter"></i><a> Twitter </a></li>
                     <li><i class="fa fa-telegram"></i><a> Telegram</a></li>

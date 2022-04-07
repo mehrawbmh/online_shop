@@ -8,162 +8,315 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-22 11:48+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2022-04-07 13:31+0000\n"
+"PO-Revision-Date: 2022-04-07 13:32+0000\n"
+"Last-Translator: Mehrab MHosseini <mehrabmh@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: core/models.py:16
+#: core/admin.py:21
+msgid "User_info"
+msgstr "اطلاعات کاربر"
+
+#: core/admin.py:22
+msgid "User_permissions"
+msgstr "دسترسی های کاربر"
+
+#: core/admin.py:26
+msgid "Personal info"
+msgstr "اطلاعات شخصی"
+
+#: core/admin.py:27
+msgid "Permissions"
+msgstr "دسترسی"
+
+#: core/admin.py:30
+msgid "Important dates"
+msgstr "تاریخ های مهم"
+
+#: core/models.py:19
 msgid "Delete_status"
-msgstr ""
+msgstr "وضعیت حذف"
 
-#: core/models.py:22
+#: core/models.py:25
 msgid "Active_status"
-msgstr ""
+msgstr "وضعیت فعالیت"
 
-#: core/models.py:27
+#: core/models.py:30
 msgid "Create time"
-msgstr ""
+msgstr "تاریخ ایجاد"
 
-#: core/models.py:31
+#: core/models.py:34
 msgid "Last update"
-msgstr ""
+msgstr "اخرین اپدیت"
 
-#: core/models.py:72
+#: core/models.py:74
 msgid "User"
-msgstr ""
+msgstr "کاربر"
 
-#: core/models.py:95
+#: core/models.py:116
 msgid "Discount value"
-msgstr ""
+msgstr "میزان تخفیف"
 
-#: core/models.py:100
+#: core/models.py:121
 msgid "Maximum Price"
-msgstr ""
+msgstr "حداکثر قیمت"
 
-#: core/models.py:105
+#: core/models.py:126
 msgid "Expire time"
-msgstr ""
+msgstr "تاریخ انقضا"
 
 #: customers/models.py:7
 msgid "Customer"
-msgstr ""
+msgstr "مشتری"
 
-#: customers/models.py:20
+#: customers/models.py:36
 msgid "Address"
-msgstr ""
+msgstr "آدرس"
 
-#: customers/models.py:21
+#: customers/models.py:37
 msgid "Addresses"
-msgstr ""
+msgstr "آدرس ها"
 
-#: orders/models.py:10
+#: orders/models.py:11
 msgid "Basket item"
-msgstr ""
+msgstr "آیتم سبد خرید"
 
-#: orders/models.py:15 products/models.py:119
+#: orders/models.py:16 products/models.py:171
 msgid "Product"
-msgstr ""
+msgstr "محصول"
 
-#: orders/models.py:18
+#: orders/models.py:19
 msgid "Number of product"
-msgstr ""
+msgstr "تعداد محصول"
 
-#: orders/models.py:24 orders/models.py:46
+#: orders/models.py:26 orders/models.py:58
 msgid "Basket"
-msgstr ""
+msgstr "سبد خرید"
 
-#: orders/models.py:47
+#: orders/models.py:59
 msgid "Baskets"
-msgstr ""
+msgstr "سبدهای خرید"
 
-#: orders/models.py:57
+#: orders/models.py:68
 msgid "OffCode"
-msgstr ""
+msgstr "کد تخفیف"
 
-#: orders/models.py:62
+#: orders/models.py:73
 msgid "Basket Status"
-msgstr ""
+msgstr "وضعیت سبد"
 
-#: products/models.py:10
+#: products/models.py:11
 msgid "Categories"
-msgstr ""
+msgstr "دسته بندی ها"
 
-#: products/models.py:11 products/models.py:139
+#: products/models.py:12 products/models.py:192
 msgid "Category"
-msgstr ""
+msgstr "دسته بندی"
 
-#: products/models.py:17
+#: products/models.py:18
 msgid "Category Name"
-msgstr ""
+msgstr "نام دسته"
 
-#: products/models.py:26
+#: products/models.py:27
 msgid "Category parent"
-msgstr ""
+msgstr "دسته بندی والد"
 
-#: products/models.py:37
+#: products/models.py:59 templates/products/product_detail.html:36
 msgid "Brand"
-msgstr ""
+msgstr "برند"
 
-#: products/models.py:43
+#: products/models.py:65
 msgid "Brand name"
-msgstr ""
+msgstr "نام برند"
 
-#: products/models.py:47
+#: products/models.py:69
 msgid "Satisfaction rating"
-msgstr ""
+msgstr "درصد رضایت"
 
-#: products/models.py:54
+#: products/models.py:77
 msgid "Brand description"
-msgstr ""
+msgstr "توضیحات برند"
 
-#: products/models.py:63 products/models.py:147
+#: products/models.py:86 products/models.py:200
 msgid "Discount"
-msgstr ""
-
-#: products/models.py:82
-msgid "Off Code"
-msgstr ""
-
-#: products/models.py:86
-msgid "Unique token"
-msgstr ""
-
-#: products/models.py:93
-msgid "Title"
-msgstr ""
-
-#: products/models.py:97
-msgid "Minimum buy amount"
-msgstr ""
+msgstr "تخفیف"
 
 #: products/models.py:120
-#, fuzzy
+msgid "Off Code"
+msgstr "کد تخفیف"
+
+#: products/models.py:124
+msgid "Unique token"
+msgstr "توکن اختصاصی"
+
+#: products/models.py:131
+msgid "Title"
+msgstr "عنوان"
+
+#: products/models.py:135
+msgid "Minimum buy amount"
+msgstr "حداقل میزان خرید"
+
+#: products/models.py:172
 #| msgid "Product"
 msgid "Products"
 msgstr "محصولات"
 
-#: products/models.py:126
+#: products/models.py:178
 msgid "Product name"
-msgstr ""
+msgstr "نام محصول"
 
-#: products/models.py:130
+#: products/models.py:182
 msgid "Product price"
-msgstr ""
+msgstr "قیمت محصول"
 
-#: products/models.py:150
+#: products/models.py:203
 msgid "Available number in store"
-msgstr ""
+msgstr "تعداد موجود در انبار"
 
-#: products/models.py:156
+#: products/models.py:211
 msgid "Description"
-msgstr ""
+msgstr "توضیح"
 
-#: products/models.py:160
+#: products/models.py:214
 msgid "Product Properties"
-msgstr ""
+msgstr "ویژگی های محصول"
+
+#: products/models.py:220
+msgid "Product image"
+msgstr "تصویر محصول"
+
+#: templates/admin/base.html:95
+msgid "Search"
+msgstr "جستجو"
+
+#: templates/admin/base.html:155
+msgid "Account"
+msgstr "حساب"
+
+#: templates/admin/base.html:158
+msgid "Change password"
+msgstr "تغییر رمز"
+
+#: templates/admin/base.html:162
+msgid "Log out"
+msgstr "خروج"
+
+#: templates/admin/base.html:173
+msgid "See Profile"
+msgstr "مشاهده پروفایل"
+
+#: templates/admin/base.html:213
+msgid "Dashboard"
+msgstr "داشبورد"
+
+#: templates/admin/base.html:326
+msgid "Jazzmin version"
+msgstr "Jazzmin version"
+
+#: templates/admin/base.html:329
+msgid "Copyright"
+msgstr "کپی رایت"
+
+#: templates/admin/base.html:329
+msgid "All rights reserved."
+msgstr "همه حقوق محفوظ است"
+
+#: templates/admin/base.html:345
+msgid "UI Configuration"
+msgstr "کانفیگ کردن دیدگاه کاربری"
+
+#: templates/admin/base.html:349
+msgid "Copy this info your settings file to persist these UI changes"
+msgstr "برای تایید کد بالا را در تنظیمات کپی کنید"
+
+#: templates/admin/base.html:353
+msgid "Close"
+msgstr "بستن"
+
+#: templates/layout/footer.html:11
+msgid "Know us better"
+msgstr "ما را بهتر بشناسید"
+
+#: templates/layout/footer.html:13
+msgid "Rules"
+msgstr "قوانین"
+
+#: templates/layout/footer.html:14
+msgid "Cooperation"
+msgstr "همکاری"
+
+#: templates/layout/footer.html:15
+msgid "contact us"
+msgstr "تماس با ما"
+
+#: templates/layout/footer.html:16
+msgid "about us"
+msgstr "درباره ما"
+
+#: templates/layout/footer.html:20
+msgid "Address and more info"
+msgstr "آدرس و اطلاعات بیشتر"
+
+#: templates/layout/footer.html:24
+msgid "Contact us"
+msgstr "تماس با ما"
+
+#: templates/layout/navigation_bar.html:20
+msgid "log in"
+msgstr "ورود"
+
+#: templates/orders/basket.html:43
+#| msgid "Product"
+msgid "Product photo"
+msgstr "تصویر محصول"
+
+#: templates/orders/basket.html:44
+#| msgid "Title"
+msgid "title"
+msgstr "عنوان"
+
+#: templates/orders/basket.html:45
+msgid "Price"
+msgstr "قیمت"
+
+#: templates/orders/basket.html:46
+msgid "Quantity"
+msgstr "تعداد"
+
+#: templates/orders/basket.html:48
+msgid "Total"
+msgstr "مجموع"
+
+#: templates/orders/basket.html:116
+#| msgid "Product price"
+msgid "Total price:"
+msgstr "قیمت نهایی"
+
+#: templates/orders/basket.html:120
+msgid "Tooman"
+msgstr "تومان"
+
+#: templates/products/product_card.html:20
+msgid "Add to cart"
+msgstr "اضافه کردن به سبد خرید"
+
+#: templates/products/product_detail.html:25
+#: templates/products/product_detail.html:31
+msgid "price:"
+msgstr "قیمت:"
+
+#: templates/products/product_detail.html:41
+msgid "More info:"
+msgstr "اطلاعات بیشتر:"
+
+#: templates/products/product_detail.html:47
+#| msgid "Product Properties"
+msgid "Properties:"
+msgstr "ویژگی های محصول"
