@@ -8,7 +8,7 @@ from products.models import Product
 from .models import CartItem, Cart
 from .serializers import CartItemSerializer, CartSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, RetrieveAPIView
-from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -41,6 +41,23 @@ class CartItemAPIView(ListCreateAPIView):
             serializer.save(cart=cart)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class CartItemCountChange(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            cart_item = CartItem.objects.get(id=int(self.request.POST.get('cartitem_id')))
+        except:
+            return Response(status=400)
+        if self.request.user.customer == cart_item.cart.customer:
+            cart_item.count = int(self.request.POST.get('new_value'))
+            cart_item.save()
+            return Response(status=200)
+        else:
+            return Response(status=403)
 
 
 class CartItemDetailAPIView(RetrieveUpdateDestroyAPIView):

@@ -23,6 +23,9 @@
             text-align: center !important;
             vertical-align: middle !important;
         }
+        td input{
+            width: 50px;
+        }
     </style>
 {% endblock %}
 
@@ -32,8 +35,8 @@
             <section class="cart_area section_padding">
                 <div class="container">
                     <div class="col">
-                        <div class="table-responsive">
-                            <table class="table">
+                        <div class="table">
+                            <table class="table-responsive">
                                 <thead>
                                 <tr>
                                     <th scope="col">Product photo</th>
@@ -69,7 +72,7 @@
                                                 <h5>{{ cart_item.product.final_price }}</h5>
                                             </td>
                                             <td>
-                                                {{ cart_item.count }}
+                                                <input type="number" value="{{ cart_item.count }}" onchange="change_count_database(this, {{ cart_item.id }})">
                                             </td>
                                             <td>
                                                 <h5 class="text-secondary">{{ cart_item.final_price }}</h5>
@@ -99,7 +102,7 @@
                                                 <h5>{{ product.final_price }}</h5>
                                             </td>
                                             <td>
-                                                {{ count }}
+                                                <input type="number" value="{{ count }}" onchange='change_count_cookie(this, {{ product.id }})'>
                                             </td>
 
                                         </tr>
@@ -113,7 +116,7 @@
                                     </td>
                                     <td></td>
                                     <td>
-                                        <h3 class="text-primary">{{ totalprize }}</h3>
+                                        <h3 class="text-primary">{{ totalprize }} Tooman </h3>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -124,4 +127,32 @@
             </section>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+<script>
+    function setCookie(cName, cValue, expDays=60) {
+        let date = new Date();
+        date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+    }
+    function change_count_cookie(input, prod_id){
+        input.value = Math.abs(input.value)
+        setCookie('prod'.concat(prod_id),input.value)
+        document.location.reload()
+    }
+    function change_count_database(input, cartitem_id){
+        input.value = Math.abs(input.value)
+        $.post(
+            "{% url 'cartitem_change_count' %}",
+            {'csrfmiddlewaretoken': '{{ csrf_token }}', 'cartitem_id': cartitem_id, 'new_value':Math.abs(input.value)},
+            function () {
+                document.location.reload()
+            }
+        ).fail(function (){
+            console.log('something went wrong!')
+        })
+    }
+</script>
 {% endblock %}
