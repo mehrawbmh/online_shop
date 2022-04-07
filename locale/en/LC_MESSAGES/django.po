@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-07 12:37+0000\n"
+"POT-Creation-Date: 2022-04-07 13:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -236,6 +236,34 @@ msgstr ""
 
 #: templates/admin/base.html:353
 msgid "Close"
+msgstr ""
+
+#: templates/layout/footer.html:11
+msgid "Know us better"
+msgstr ""
+
+#: templates/layout/footer.html:13
+msgid "Rules"
+msgstr ""
+
+#: templates/layout/footer.html:14
+msgid "Cooperation"
+msgstr ""
+
+#: templates/layout/footer.html:15
+msgid "contact us"
+msgstr ""
+
+#: templates/layout/footer.html:16
+msgid "about us"
+msgstr ""
+
+#: templates/layout/footer.html:20
+msgid "Address and more info"
+msgstr ""
+
+#: templates/layout/footer.html:24
+msgid "Contact us"
 msgstr ""
 
 #: templates/layout/navigation_bar.html:20

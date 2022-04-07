@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-07 12:37+0000\n"
-"PO-Revision-Date: 2022-04-07 12:38+0000\n"
+"POT-Creation-Date: 2022-04-07 13:31+0000\n"
+"PO-Revision-Date: 2022-04-07 13:32+0000\n"
 "Last-Translator: Mehrab MHosseini <mehrabmh@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -164,7 +164,6 @@ msgid "Minimum buy amount"
 msgstr "حداقل میزان خرید"
 
 #: products/models.py:172
-#, fuzzy
 #| msgid "Product"
 msgid "Products"
 msgstr "محصولات"
@@ -241,18 +240,44 @@ msgstr "برای تایید کد بالا را در تنظیمات کپی کنی
 msgid "Close"
 msgstr "بستن"
 
+#: templates/layout/footer.html:11
+msgid "Know us better"
+msgstr "ما را بهتر بشناسید"
+
+#: templates/layout/footer.html:13
+msgid "Rules"
+msgstr "قوانین"
+
+#: templates/layout/footer.html:14
+msgid "Cooperation"
+msgstr "همکاری"
+
+#: templates/layout/footer.html:15
+msgid "contact us"
+msgstr "تماس با ما"
+
+#: templates/layout/footer.html:16
+msgid "about us"
+msgstr "درباره ما"
+
+#: templates/layout/footer.html:20
+msgid "Address and more info"
+msgstr "آدرس و اطلاعات بیشتر"
+
+#: templates/layout/footer.html:24
+msgid "Contact us"
+msgstr "تماس با ما"
+
 #: templates/layout/navigation_bar.html:20
 msgid "log in"
 msgstr "ورود"
 
 #: templates/orders/basket.html:43
-#, fuzzy
 #| msgid "Product"
 msgid "Product photo"
-msgstr "محصول"
+msgstr "تصویر محصول"
 
 #: templates/orders/basket.html:44
-#, fuzzy
 #| msgid "Title"
 msgid "title"
 msgstr "عنوان"
@@ -270,10 +295,9 @@ msgid "Total"
 msgstr "مجموع"
 
 #: templates/orders/basket.html:116
-#, fuzzy
 #| msgid "Product price"
 msgid "Total price:"
-msgstr "قیمت محصول"
+msgstr "قیمت نهایی"
 
 #: templates/orders/basket.html:120
 msgid "Tooman"
@@ -293,7 +317,6 @@ msgid "More info:"
 msgstr "اطلاعات بیشتر:"
 
 #: templates/products/product_detail.html:47
-#, fuzzy
 #| msgid "Product Properties"
 msgid "Properties:"
 msgstr "ویژگی های محصول"

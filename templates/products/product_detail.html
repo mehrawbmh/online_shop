@@ -53,7 +53,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <a type="button" href="#" class="btn btn-success w-25">Add to your Cart</a>
+                <button class="btn btn-success w-25" onclick="AddToCard({{ product.id }})" id="click{{product.id}}button">Add to your Cart</button>
 
             </center>
             </div>
@@ -78,3 +78,4 @@
         }
     </style>
 {% endblock %}
+
