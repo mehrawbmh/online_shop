@@ -1,10 +1,13 @@
 {% extends 'layout/_base.html' %}
+{% load i18n %}
+{% get_current_language as CURRENT_LANG %}
 {% block links %}
     {{ block.super }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 {% endblock %}
+
 {% block main_body %}
     <div class="container-fluid" style="background-color: #A0E7E5;">
         <div class="row justify-content-center">

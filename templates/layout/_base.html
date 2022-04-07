@@ -1,7 +1,11 @@
-<!doctype html>
 {% load static %}
 {% load i18n %}
-<html lang={% block language %} "en-US" {% endblock %}>
+{% get_available_languages as LANGS %}
+{% get_language_info_list for LANGS as languages %}
+{% get_current_language as CURRENT_LANG %}
+<!doctype html>
+{#<html lang="{% block language %}{{ CURRENT_LANG }}{% endblock %}" dir="{% if CUREENT_LANG == 'fa' %}rtl{% else %}ltr{% endif %}">#}
+<html lang="{{ CURRENT_LANG }}" dir="{% if CURRENT_LANG == 'fa' %}rtl{% else %}ltr{% endif %}">
 <head>
     {% include 'layout/meta_tags.html' %}
     <title>{% block title %} Online Shop {% endblock %}</title>
