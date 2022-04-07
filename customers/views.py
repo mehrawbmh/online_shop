@@ -42,7 +42,7 @@ class CustomerLoginView(LoginView):
             CartItem.objects.bulk_create(cart_item_objects)
         else:
             new_cart = Cart.objects.create(customer=self.request.user.customer)
-            cart_item_objects = [CartItem(product_id=int(x), count=y, cart=new_cart) for x, y in products_id_dict]
+            cart_item_objects = [CartItem(product_id=int(x), count=y, cart=new_cart) for x, y in products_id_dict.items()]
             CartItem.objects.bulk_create(cart_item_objects)
         for key in self.request.COOKIES.keys():
             if key.startswith('prod'):

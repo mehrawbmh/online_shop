@@ -10,15 +10,15 @@ class CartView(View):
 
     def get(self, request):
         data = dict()  # context!
+        data['valid'] = 1
         if request.user.is_authenticated:
             cart = self.request.user.customer.cart_set.last()
-            cart: Cart
-            data = {'cart': cart}
-            if cart:
-                data['items'] = CartItem.objects.filter(cart=cart)
+            data = {'cart': cart, 'totalprize': 0}
+            if cart and cart.status == 'unfinished':
+                data['items'] = cart.items.all()
                 data['totalprize'] = cart.final_prize_calc()
             else:
-                data['items'] = None
+                data['items'] = []
         else:
             data['cart'] = None
             items = list()
@@ -37,4 +37,3 @@ class CartView(View):
                 return HttpResponse('cookie does not have any value!', status=400)
 
         return render(request, 'orders/basket.html', data)
-

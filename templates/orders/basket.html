@@ -109,7 +109,6 @@
                                         </tr>
                                     {% endfor %}
                                 {% endif %}
-
                                 <tr>
                                     <td></td>
                                     <td>
@@ -123,6 +122,28 @@
                                 </tbody>
                             </table>
                         </div>
+                    {% if valid != 2 %}
+                    <form method="post" action="{% url 'check_off_code' %}">
+                        {% csrf_token %}
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                {#<h5>Any offcode?</h5>#}
+                                <label class="p-2" for="offCode">Any off code?</label>
+                                <input type="text" placeholder="your code..." id="offCode" name="offcode">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary h-25 mb-1">Submit</button>
+                                {% if valid == 0 %} <h6>Your code didn't work!</h6> {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                    {% else %}
+                        <p class="text-success">You've applied your off code!</p>
+                        <p class="text-success">profit: {{ profit }} Tooman</p>
+                    {% endif %}
+                    <div class="justify-content-center">
+                        <a href="{% url 'check_off_code' %}?cartid={{ cart.id }}" class="btn btn-info">Click here to finalize your Order</a>
+                    </div>
                     </div>
                 </div>
             </section>
