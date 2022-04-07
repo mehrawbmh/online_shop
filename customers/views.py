@@ -20,12 +20,13 @@ class CustomerLoginView(LoginView):
 
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
+        resp = HttpResponseRedirect(self.get_success_url())
         try:
             products_id_dict = {int(x[4:]): y for (x, y) in self.request.COOKIES.items() if x.startswith('prod')}
             if not products_id_dict:
-                return HttpResponseRedirect(self.get_success_url())
+                return resp
         except ValueError:
-            return HttpResponseRedirect(self.get_success_url())
+            return resp
 
         last_cart: Cart = self.request.user.customer.cart_set.last()
         if last_cart and last_cart.status == 'unfinished':
@@ -43,8 +44,10 @@ class CustomerLoginView(LoginView):
             new_cart = Cart.objects.create(customer=self.request.user.customer)
             cart_item_objects = [CartItem(product_id=int(x), count=y, cart=new_cart) for x, y in products_id_dict]
             CartItem.objects.bulk_create(cart_item_objects)
-
-        return HttpResponseRedirect(self.get_success_url())
+        for key in self.request.COOKIES.keys():
+            if key.startswith('prod'):
+                resp.delete_cookie(key)
+        return resp
 
 
 class CustomerSignUpView(FormView):
