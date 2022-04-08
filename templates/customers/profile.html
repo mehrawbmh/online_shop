@@ -159,8 +159,10 @@
                             {% for cart in customer.cart_set.all %}
                                 {% if cart == customer.cart_set.last %}
                                     <a href="{% url 'basket_detail' %}">Order at {{ cart.create_timestamp }}</a>
+                                    <br>
                                 {% else %}
                                     <a href="{% url 'cart-detail' cart.id %}">Order at {{ cart.create_timestamp }}</a>
+                                    <br>
                                 {% endif %}
                             {% endfor %}
                         </ul>
