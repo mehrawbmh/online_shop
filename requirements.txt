@@ -13,7 +13,7 @@ django-rosetta==0.9.8
 djangorestframework==3.13.1
 fandogh-cli==1.26.10
 idna==3.3
-Pillow==9.0.1
+Pillow==10.2.0
 polib==1.1.1
 pycparser==2.21
 pyOpenSSL==22.0.0
